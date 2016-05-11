@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.RentDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.entity.Rent" >
+	<result column="id" property="id"/>
+	<result column="startDate" property="startDate"/>
+	<result column="expectDate" property="expectDate"/>
+	<result column="actualDate" property="actualDate"/>
+	<result column="Overdue" property="overdue"/>
+	<result column="expectRental" property="expectRental"/>
+	<result column="actualRental" property="actualRental"/>
+	<result column="rentDept" property="rentDept"/>
+	<result column="rentPersoRn" property="rentPersoRn"/>
+	<result column="project" property="project"/>
+	<result column="sId" property="sId"/>
+</resultMap>
+       
+<!-- rent table all fields -->
+<sql id="Base_Column_List" >
+	 id,startDate,expectDate,actualDate,Overdue,expectRental,actualRental,rentDept,rentPersoRn,project,sId
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="condition.id != null and condition.id != ''" >
+	    and id =  #{condition.id}
+	</if>
+	<if test="condition.startDate != null and condition.startDate != ''" >
+	    and startDate =  #{condition.startDate}
+	</if>
+	<if test="condition.expectDate != null and condition.expectDate != ''" >
+	    and expectDate =  #{condition.expectDate}
+	</if>
+	<if test="condition.actualDate != null and condition.actualDate != ''" >
+	    and actualDate =  #{condition.actualDate}
+	</if>
+	<if test="condition.overdue != null and condition.overdue != ''" >
+	    and Overdue =  #{condition.overdue}
+	</if>
+	<if test="condition.expectRental != null and condition.expectRental != ''" >
+	    and expectRental =  #{condition.expectRental}
+	</if>
+	<if test="condition.actualRental != null and condition.actualRental != ''" >
+	    and actualRental =  #{condition.actualRental}
+	</if>
+	<if test="condition.rentDept != null and condition.rentDept != ''" >
+	    and rentDept =  #{condition.rentDept}
+	</if>
+	<if test="condition.rentPersoRn != null and condition.rentPersoRn != ''" >
+	    and rentPersoRn =  #{condition.rentPersoRn}
+	</if>
+	<if test="condition.project != null and condition.project != ''" >
+	    and project =  #{condition.project}
+	</if>
+	<if test="condition.sId != null and condition.sId != ''" >
+	    and sId =  #{condition.sId}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into rent(id,startDate,expectDate,actualDate,Overdue,expectRental,actualRental,rentDept,rentPersoRn,project,sId)
+ values(#{id},#{startDate},#{expectDate},#{actualDate},#{overdue},#{expectRental},#{actualRental},#{rentDept},#{rentPersoRn},#{project},#{sId})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update rent set startDate=#{startDate},expectDate=#{expectDate},actualDate=#{actualDate},Overdue=#{overdue},expectRental=#{expectRental},actualRental=#{actualRental},rentDept=#{rentDept},rentPersoRn=#{rentPersoRn},project=#{project},sId=#{sId} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update rent set 
+	<trim  suffixOverrides="," >
+	<if test="startDate != null  ">
+		startDate=#{startDate},
+	</if>
+	<if test="expectDate != null  ">
+		expectDate=#{expectDate},
+	</if>
+	<if test="actualDate != null  ">
+		actualDate=#{actualDate},
+	</if>
+	<if test="overdue != null  ">
+		Overdue=#{overdue},
+	</if>
+	<if test="expectRental != null  ">
+		expectRental=#{expectRental},
+	</if>
+	<if test="actualRental != null  ">
+		actualRental=#{actualRental},
+	</if>
+	<if test="rentDept != null  ">
+		rentDept=#{rentDept},
+	</if>
+	<if test="rentPersoRn != null  ">
+		rentPersoRn=#{rentPersoRn},
+	</if>
+	<if test="project != null  ">
+		project=#{project},
+	</if>
+	<if test="sId != null  ">
+		sId=#{sId},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from rent where id = #{id}
+</delete>
+
+<delete id="deleteRentByBatch" parameterType="java.util.List">
+  		delete from rent
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 租借信息表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from rent where id = #{id}
+</select>
+
+<!-- 租借信息表 列表总数-->
+<select id="queryRentListCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from rent 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询租借信息表列表 -->
+<select id="queryRentListByPage" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from rent 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select>
+  	
+</mapper>   

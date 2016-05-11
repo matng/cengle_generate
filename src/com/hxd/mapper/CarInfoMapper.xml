@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.CarInfoDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.entity.CarInfo" >
+	<result column="id" property="id"/>
+	<result column="rentId" property="rentId"/>
+	<result column="plateNum" property="plateNum"/>
+	<result column="brand" property="brand"/>
+	<result column="model" property="model"/>
+	<result column="status" property="status"/>
+	<result column="imgUrl" property="imgUrl"/>
+	<result column="sId" property="sId"/>
+	<result column="createDate" property="createDate"/>
+	<result column="delDate" property="delDate"/>
+	<result column="orderId" property="orderId"/>
+</resultMap>
+       
+<!-- carInfo table all fields -->
+<sql id="Base_Column_List" >
+	 id,rentId,plateNum,brand,model,status,imgUrl,sId,createDate,delDate,orderId
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="condition.id != null and condition.id != ''" >
+	    and id =  #{condition.id}
+	</if>
+	<if test="condition.rentId != null and condition.rentId != ''" >
+	    and rentId =  #{condition.rentId}
+	</if>
+	<if test="condition.plateNum != null and condition.plateNum != ''" >
+	    and plateNum =  #{condition.plateNum}
+	</if>
+	<if test="condition.brand != null and condition.brand != ''" >
+	    and brand =  #{condition.brand}
+	</if>
+	<if test="condition.model != null and condition.model != ''" >
+	    and model =  #{condition.model}
+	</if>
+	<if test="condition.status != null and condition.status != ''" >
+	    and status =  #{condition.status}
+	</if>
+	<if test="condition.imgUrl != null and condition.imgUrl != ''" >
+	    and imgUrl =  #{condition.imgUrl}
+	</if>
+	<if test="condition.sId != null and condition.sId != ''" >
+	    and sId =  #{condition.sId}
+	</if>
+	<if test="condition.createDate != null and condition.createDate != ''" >
+	    and createDate =  #{condition.createDate}
+	</if>
+	<if test="condition.delDate != null and condition.delDate != ''" >
+	    and delDate =  #{condition.delDate}
+	</if>
+	<if test="condition.orderId != null and condition.orderId != ''" >
+	    and orderId =  #{condition.orderId}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into carInfo(id,rentId,plateNum,brand,model,status,imgUrl,sId,createDate,delDate,orderId)
+ values(#{id},#{rentId},#{plateNum},#{brand},#{model},#{status},#{imgUrl},#{sId},#{createDate},#{delDate},#{orderId})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update carInfo set rentId=#{rentId},plateNum=#{plateNum},brand=#{brand},model=#{model},status=#{status},imgUrl=#{imgUrl},sId=#{sId},createDate=#{createDate},delDate=#{delDate},orderId=#{orderId} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update carInfo set 
+	<trim  suffixOverrides="," >
+	<if test="rentId != null  ">
+		rentId=#{rentId},
+	</if>
+	<if test="plateNum != null  ">
+		plateNum=#{plateNum},
+	</if>
+	<if test="brand != null  ">
+		brand=#{brand},
+	</if>
+	<if test="model != null  ">
+		model=#{model},
+	</if>
+	<if test="status != null  ">
+		status=#{status},
+	</if>
+	<if test="imgUrl != null  ">
+		imgUrl=#{imgUrl},
+	</if>
+	<if test="sId != null  ">
+		sId=#{sId},
+	</if>
+	<if test="createDate != null  ">
+		createDate=#{createDate},
+	</if>
+	<if test="delDate != null  ">
+		delDate=#{delDate},
+	</if>
+	<if test="orderId != null  ">
+		orderId=#{orderId},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from carInfo where id = #{id}
+</delete>
+
+<delete id="deleteCarInfoByBatch" parameterType="java.util.List">
+  		delete from carInfo
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 车辆信息表 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from carInfo where id = #{id}
+</select>
+
+<!-- 车辆信息表 列表总数-->
+<select id="queryCarInfoListCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from carInfo 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询车辆信息表列表 -->
+<select id="queryCarInfoListByPage" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from carInfo 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+    <if test="limitClause != null and limitClause != ''" >
+       ${limitClause}
+    </if>
+</select>
+  	
+</mapper>   
