@@ -2,20 +2,20 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hxd.dao.CarInfoDao" > 
+<mapper namespace="com.hxd.dao.CarInfoMapper" > 
 <!-- Result Map-->
-<resultMap id="BaseResultMap" type="com.hxd.entity.CarInfo" >
-	<result column="id" property="id"/>
-	<result column="rentId" property="rentId"/>
-	<result column="plateNum" property="plateNum"/>
-	<result column="brand" property="brand"/>
-	<result column="model" property="model"/>
-	<result column="status" property="status"/>
-	<result column="imgUrl" property="imgUrl"/>
-	<result column="sId" property="sId"/>
-	<result column="createDate" property="createDate"/>
-	<result column="delDate" property="delDate"/>
-	<result column="orderId" property="orderId"/>
+<resultMap id="BaseResultMap" type="com.hxd.bean.CarInfo" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="rentId" jdbcType="INTEGER" property="rentId"/>
+	<result column="plateNum" jdbcType="VARCHAR" property="plateNum"/>
+	<result column="brand" jdbcType="VARCHAR" property="brand"/>
+	<result column="model" jdbcType="VARCHAR" property="model"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+	<result column="imgUrl" jdbcType="VARCHAR" property="imgUrl"/>
+	<result column="sId" jdbcType="INTEGER" property="sId"/>
+	<result column="createDate" jdbcType="TIMESTAMP" property="createDate"/>
+	<result column="delDate" jdbcType="TIMESTAMP" property="delDate"/>
+	<result column="orderId" jdbcType="INTEGER" property="orderId"/>
 </resultMap>
        
 <!-- carInfo table all fields -->
@@ -28,45 +28,45 @@
 <sql id="Example_Where_Clause">
 where 1=1
 <trim  suffixOverrides="," >
-	<if test="condition.id != null and condition.id != ''" >
-	    and id =  #{condition.id}
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
 	</if>
-	<if test="condition.rentId != null and condition.rentId != ''" >
-	    and rentId =  #{condition.rentId}
+	<if test="rentId != null and rentId != ''" >
+	    and rentId =  #{rentId}
 	</if>
-	<if test="condition.plateNum != null and condition.plateNum != ''" >
-	    and plateNum =  #{condition.plateNum}
+	<if test="plateNum != null and plateNum != ''" >
+	    and plateNum =  #{plateNum}
 	</if>
-	<if test="condition.brand != null and condition.brand != ''" >
-	    and brand =  #{condition.brand}
+	<if test="brand != null and brand != ''" >
+	    and brand =  #{brand}
 	</if>
-	<if test="condition.model != null and condition.model != ''" >
-	    and model =  #{condition.model}
+	<if test="model != null and model != ''" >
+	    and model =  #{model}
 	</if>
-	<if test="condition.status != null and condition.status != ''" >
-	    and status =  #{condition.status}
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
 	</if>
-	<if test="condition.imgUrl != null and condition.imgUrl != ''" >
-	    and imgUrl =  #{condition.imgUrl}
+	<if test="imgUrl != null and imgUrl != ''" >
+	    and imgUrl =  #{imgUrl}
 	</if>
-	<if test="condition.sId != null and condition.sId != ''" >
-	    and sId =  #{condition.sId}
+	<if test="sId != null and sId != ''" >
+	    and sId =  #{sId}
 	</if>
-	<if test="condition.createDate != null and condition.createDate != ''" >
-	    and createDate =  #{condition.createDate}
+	<if test="createDate != null and createDate != ''" >
+	    and createDate =  #{createDate}
 	</if>
-	<if test="condition.delDate != null and condition.delDate != ''" >
-	    and delDate =  #{condition.delDate}
+	<if test="delDate != null and delDate != ''" >
+	    and delDate =  #{delDate}
 	</if>
-	<if test="condition.orderId != null and condition.orderId != ''" >
-	    and orderId =  #{condition.orderId}
+	<if test="orderId != null and orderId != ''" >
+	    and orderId =  #{orderId}
 	</if>
 </trim>
 </sql>
    
 
 <!-- 插入记录 -->
-<insert id="add" parameterType="Object" >
+<insert id="insert" parameterType="Object" >
 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
   </selectKey>
@@ -148,12 +148,14 @@ where 1=1
 	<include refid="Base_Column_List"/>
 	from carInfo 
 	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-    <if test="limitClause != null and limitClause != ''" >
-       ${limitClause}
-    </if>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
 </select>
   	
 </mapper>   

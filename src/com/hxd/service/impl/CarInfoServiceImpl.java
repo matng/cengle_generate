@@ -30,17 +30,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 	
 	private Log log = LogFactory.getLog(CarInfoServiceImpl.class);
 	
-	public int deleteCarInfoByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		try {
-			return CarInfoDao.deleteByPrimaryKey(id);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			log.info("CarInfoServiceImpl deleteCarInfoByPrimaryKey failed!");
-		}
-		return -1;
-	}
+	
 
 	public int insertCarInfo(CarInfo record) {
 		// TODO Auto-generated method stub
@@ -65,6 +55,18 @@ public class CarInfoServiceImpl implements CarInfoService {
 			log.info("CarInfoServiceImpl insertCarInfoSelective failed!");
 		}
 		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	public int deleteCarInfoByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			return CarInfoDao.deleteByPrimaryKey(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.info("CarInfoServiceImpl deleteCarInfoByPrimaryKey failed!");
+		}
 		return -1;
 	}
 

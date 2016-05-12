@@ -1,4 +1,4 @@
-package cengle.service;
+package com.hxd.test;
 
 import java.util.List;
 
@@ -50,9 +50,10 @@ public class CarInfoServiceTest {
 	public void testList(){
 		try {
 			CarInfoVo carInfoVo = new CarInfoVo();
-			List<CarInfo> carInfos = carInfoService.queryCarInfoByPage(carInfoVo);
-			for(CarInfo e:carInfos){
-				System.out.println(e.getName());
+			List<CarInfo> carInfoList = carInfoService.queryCarInfoByPage(carInfoVo);
+			System.out.println("返回总条数："+carInfoList.size());
+			for(CarInfo e : carInfoList){
+				System.out.println(e.getId());
 			}
 			System.out.println("----testList----------");
 		} catch (Exception e) {
@@ -63,7 +64,7 @@ public class CarInfoServiceTest {
 	@Test
 	public void testDel(){
 		try {
-			carInfoService.delete(id);
+			carInfoService.deleteCarInfoByPrimaryKey((Integer)id);
 			System.out.println("---testDel-----------");
 		} catch (Exception e) {
 			e.printStackTrace();

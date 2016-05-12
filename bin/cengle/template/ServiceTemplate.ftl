@@ -16,11 +16,13 @@ public interface ${className}Service{
 
 	String SERVICE_NAME = "${className}Service";
 	
-	int delete${className}ByPrimaryKey(Integer id);
+    int insert${className}(${className} record);
 
     int insert${className}Selective(${className} record);
 
     ${className} select${className}ByPrimaryKey(Integer id);
+
+    int delete${className}ByPrimaryKey(Integer id);
 
     int update${className}ByPrimaryKeySelective(${className} record);
 

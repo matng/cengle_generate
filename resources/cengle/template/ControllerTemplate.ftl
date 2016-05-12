@@ -1,4 +1,4 @@
-package ${bussPackage}.controller#if($!controllerEntityPackage).${controllerEntityPackage}#end;
+package ${bussPackage}.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ import com.base.web.BaseController;
 import com.base.util.PageUtil;
 import com.base.criteria.Criteria;
 import com.base.web.JModelAndView;
-import ${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.${className};
+import ${bussPackage}.bean#if($!entityPackage).${entityPackage}#end.${className};
  import ${bussPackage}.service#if($!entityPackage).${entityPackage}#end.${className}Service;
 /**
  * 
@@ -25,7 +25,7 @@ import ${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.${classNam
 public class ${className}Controller extends BaseController{
 	
 	private final static Logger log= Logger.getLogger(${className}Controller.class);
-	@Autowired(required=false) 
+	@Autowired
 	private ${className}Service ${lowerName}Service; 
 	
 	
@@ -39,12 +39,9 @@ public class ${className}Controller extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("/${className}/list") 
-	public ModelAndView  list(HttpServletRequest request, HttpServletResponse response) throws Exception{
-	    ModelAndView mv =new JModelAndView("url", getSysConfig(), 0, request, response);
-	    Criteria criteria=new Criteria();
-		List<${className}> dataList = ${lowerName}Service.queryByList(criteria);
-		PageUtil.savePageList2ModelAndView(dataList, criteria, mv);
-		return mv; 
+	public String getList (HttpServletRequest request, HttpServletResponse response) throws Exception{
+	    
+		return null; 
 	}
 	
 	

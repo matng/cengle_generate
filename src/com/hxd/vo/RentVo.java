@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * <br>
  * <b>功能：</b>RentBean<br>
  */
-public class RentVo {
+public class RentVo extends BaseVo{
 	
 		/*主键ID*/	private Integer id;
 	/*借出时间*/	private Date startDate;

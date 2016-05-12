@@ -1,4 +1,4 @@
-package com.hxd.controller.rent;
+package com.hxd.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ import com.base.web.BaseController;
 import com.base.util.PageUtil;
 import com.base.criteria.Criteria;
 import com.base.web.JModelAndView;
-import com.hxd.entity.Rent;
+import com.hxd.bean.Rent;
  import com.hxd.service.RentService;
 /**
  * 
@@ -25,7 +25,7 @@ import com.hxd.entity.Rent;
 public class RentController extends BaseController{
 	
 	private final static Logger log= Logger.getLogger(RentController.class);
-	@Autowired(required=false) 
+	@Autowired
 	private RentService rentService; 
 	
 	
@@ -39,12 +39,9 @@ public class RentController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("/Rent/list") 
-	public ModelAndView  list(HttpServletRequest request, HttpServletResponse response) throws Exception{
-	    ModelAndView mv =new JModelAndView("url", getSysConfig(), 0, request, response);
-	    Criteria criteria=new Criteria();
-		List<Rent> dataList = rentService.queryByList(criteria);
-		PageUtil.savePageList2ModelAndView(dataList, criteria, mv);
-		return mv; 
+	public String getList (HttpServletRequest request, HttpServletResponse response) throws Exception{
+	    
+		return null; 
 	}
 	
 	

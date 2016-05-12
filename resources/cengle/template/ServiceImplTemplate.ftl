@@ -30,17 +30,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 	
 	private Log log = LogFactory.getLog(${className}ServiceImpl.class);
 	
-	public int delete${className}ByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		try {
-			return ${className}Dao.deleteByPrimaryKey(id);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			log.info("${className}ServiceImpl delete${className}ByPrimaryKey failed!");
-		}
-		return -1;
-	}
+	
 
 	public int insert${className}(${className} record) {
 		// TODO Auto-generated method stub
@@ -65,6 +55,18 @@ public class ${className}ServiceImpl implements ${className}Service {
 			log.info("${className}ServiceImpl insert${className}Selective failed!");
 		}
 		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	public int delete${className}ByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			return ${className}Dao.deleteByPrimaryKey(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.info("${className}ServiceImpl delete${className}ByPrimaryKey failed!");
+		}
 		return -1;
 	}
 

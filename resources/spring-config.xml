@@ -14,7 +14,7 @@
 	<context:annotation-config/>
 	
 	<!-- 扫描Service -->
-	<context:component-scan base-package="com.wcc.service" />
+	<context:component-scan base-package="com.hxd.service" />
 	
 	<!-- 加载属性文件存放的是jdbc一些连接数据 -->
 
@@ -33,7 +33,7 @@
 	</bean>
 
 	<aop:config>  
-        <aop:advisor pointcut="execution(* com.wcc.service.*.*(..))"  advice-ref="txAdvice" />  
+        <aop:advisor pointcut="execution(* com.hxd.service.*.*(..))"  advice-ref="txAdvice" />  
     </aop:config>  
   
     <tx:advice id="txAdvice" transaction-manager="transactionManager">  
@@ -52,14 +52,14 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="mapperLocations">
 			 <list>
-			  	<value>classpath:com/wcc/mapper/*Mapper.xml</value>
+			  	<value>classpath:com/hxd/mapper/*Mapper.xml</value>
 			 </list>
 		</property>
 	</bean>
 	
 	<!-- 扫描mapper.java  -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" autowire="byName">    
-	    <property name="basePackage" value="com.wcc.dao" />
+	    <property name="basePackage" value="com.hxd.dao" />
 	    <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 

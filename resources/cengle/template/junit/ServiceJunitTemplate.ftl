@@ -1,4 +1,4 @@
-package cengle.service;
+package com.hxd.test;
 
 import java.util.List;
 
@@ -50,9 +50,10 @@ public class ${className}ServiceTest {
 	public void testList(){
 		try {
 			${className}Vo $!{lowerName}Vo = new ${className}Vo();
-			List<${className}> $!{lowerName}s = $!{lowerName}Service.query${className}ByList($!{lowerName}Page);
-			for(${className} e:$!{lowerName}s){
-				System.out.println(e.getName());
+			List<${className}> $!{lowerName}List = $!{lowerName}Service.query${className}ByPage($!{lowerName}Vo);
+			System.out.println("返回总条数："+$!{lowerName}List.size());
+			for(${className} e : $!{lowerName}List){
+				System.out.println(e.getId());
 			}
 			System.out.println("----testList----------");
 		} catch (Exception e) {
@@ -63,7 +64,7 @@ public class ${className}ServiceTest {
 	@Test
 	public void testDel(){
 		try {
-			$!{lowerName}Service.delete(id);
+			$!{lowerName}Service.delete${className}ByPrimaryKey((Integer)id);
 			System.out.println("---testDel-----------");
 		} catch (Exception e) {
 			e.printStackTrace();

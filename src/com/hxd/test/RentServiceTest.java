@@ -1,4 +1,4 @@
-package cengle.service;
+package com.hxd.test;
 
 import java.util.List;
 
@@ -50,9 +50,10 @@ public class RentServiceTest {
 	public void testList(){
 		try {
 			RentVo rentVo = new RentVo();
-			List<Rent> rents = rentService.queryRentByList(rentPage);
-			for(Rent e:rents){
-				System.out.println(e.getName());
+			List<Rent> rentList = rentService.queryRentByPage(rentVo);
+			System.out.println("返回总条数："+rentList.size());
+			for(Rent e : rentList){
+				System.out.println(e.getId());
 			}
 			System.out.println("----testList----------");
 		} catch (Exception e) {
@@ -63,7 +64,7 @@ public class RentServiceTest {
 	@Test
 	public void testDel(){
 		try {
-			rentService.delete(id);
+			rentService.deleteRentByPrimaryKey((Integer)id);
 			System.out.println("---testDel-----------");
 		} catch (Exception e) {
 			e.printStackTrace();

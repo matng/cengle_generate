@@ -1,4 +1,4 @@
-package com.hxd.controller.carInfo;
+package com.hxd.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ import com.base.web.BaseController;
 import com.base.util.PageUtil;
 import com.base.criteria.Criteria;
 import com.base.web.JModelAndView;
-import com.hxd.entity.CarInfo;
+import com.hxd.bean.CarInfo;
  import com.hxd.service.CarInfoService;
 /**
  * 
@@ -25,7 +25,7 @@ import com.hxd.entity.CarInfo;
 public class CarInfoController extends BaseController{
 	
 	private final static Logger log= Logger.getLogger(CarInfoController.class);
-	@Autowired(required=false) 
+	@Autowired
 	private CarInfoService carInfoService; 
 	
 	
@@ -39,12 +39,9 @@ public class CarInfoController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("/CarInfo/list") 
-	public ModelAndView  list(HttpServletRequest request, HttpServletResponse response) throws Exception{
-	    ModelAndView mv =new JModelAndView("url", getSysConfig(), 0, request, response);
-	    Criteria criteria=new Criteria();
-		List<CarInfo> dataList = carInfoService.queryByList(criteria);
-		PageUtil.savePageList2ModelAndView(dataList, criteria, mv);
-		return mv; 
+	public String getList (HttpServletRequest request, HttpServletResponse response) throws Exception{
+	    
+		return null; 
 	}
 	
 	

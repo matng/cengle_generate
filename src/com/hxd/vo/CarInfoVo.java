@@ -7,7 +7,7 @@ import java.util.Date;
  * <br>
  * <b>功能：</b>CarInfoBean<br>
  */
-public class CarInfoVo {
+public class CarInfoVo extends BaseVo{
 	
 		/*主键ID*/	private Integer id;
 	/*租借ID*/	private Integer rentId;

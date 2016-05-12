@@ -16,11 +16,13 @@ public interface RentService{
 
 	String SERVICE_NAME = "RentService";
 	
-	int deleteRentByPrimaryKey(Integer id);
+    int insertRent(Rent record);
 
     int insertRentSelective(Rent record);
 
     Rent selectRentByPrimaryKey(Integer id);
+
+    int deleteRentByPrimaryKey(Integer id);
 
     int updateRentByPrimaryKeySelective(Rent record);
 

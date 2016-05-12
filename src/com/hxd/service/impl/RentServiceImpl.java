@@ -30,17 +30,7 @@ public class RentServiceImpl implements RentService {
 	
 	private Log log = LogFactory.getLog(RentServiceImpl.class);
 	
-	public int deleteRentByPrimaryKey(Integer id) {
-		// TODO Auto-generated method stub
-		try {
-			return RentDao.deleteByPrimaryKey(id);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			log.info("RentServiceImpl deleteRentByPrimaryKey failed!");
-		}
-		return -1;
-	}
+	
 
 	public int insertRent(Rent record) {
 		// TODO Auto-generated method stub
@@ -65,6 +55,18 @@ public class RentServiceImpl implements RentService {
 			log.info("RentServiceImpl insertRentSelective failed!");
 		}
 		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	public int deleteRentByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			return RentDao.deleteByPrimaryKey(id);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.info("RentServiceImpl deleteRentByPrimaryKey failed!");
+		}
 		return -1;
 	}
 

@@ -16,11 +16,13 @@ public interface CarInfoService{
 
 	String SERVICE_NAME = "CarInfoService";
 	
-	int deleteCarInfoByPrimaryKey(Integer id);
+    int insertCarInfo(CarInfo record);
 
     int insertCarInfoSelective(CarInfo record);
 
     CarInfo selectCarInfoByPrimaryKey(Integer id);
+
+    int deleteCarInfoByPrimaryKey(Integer id);
 
     int updateCarInfoByPrimaryKeySelective(CarInfo record);
 

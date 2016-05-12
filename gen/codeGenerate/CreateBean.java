@@ -91,7 +91,7 @@ public class CreateBean {
 			ColumnData cd = new ColumnData();
 			cd.setColumnName(name);
 			cd.setDataType(type);
-			cd.setColumnType(rs.getString(2));
+			cd.setColumnType(getColumnJdbcType(rs.getString(2)));
 			cd.setColumnComment(comment);
 			cd.setPrecision(precision);
 			cd.setScale(scale);
@@ -235,6 +235,18 @@ public class CreateBean {
 			dataType = "java.lang.Object";
 		}
 		return dataType;
+	}
+	
+	public String getColumnJdbcType(String dataType){
+		StringBuffer newDataType = new StringBuffer();
+		dataType = dataType.toLowerCase();
+		if (dataType.contains("datetime"))
+			newDataType.append("timestamp");
+		else if (dataType.contains("int"))
+			newDataType.append("integer");
+		else 
+			newDataType.append(dataType);
+		return newDataType.toString().toUpperCase();
 	}
 
 	public void getPackage(int type, String createPath, String content, String packageName, String className, String extendsClassName, String[] importName) throws Exception {

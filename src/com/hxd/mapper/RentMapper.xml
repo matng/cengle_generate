@@ -2,20 +2,20 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hxd.dao.RentDao" > 
+<mapper namespace="com.hxd.dao.RentMapper" > 
 <!-- Result Map-->
-<resultMap id="BaseResultMap" type="com.hxd.entity.Rent" >
-	<result column="id" property="id"/>
-	<result column="startDate" property="startDate"/>
-	<result column="expectDate" property="expectDate"/>
-	<result column="actualDate" property="actualDate"/>
-	<result column="Overdue" property="overdue"/>
-	<result column="expectRental" property="expectRental"/>
-	<result column="actualRental" property="actualRental"/>
-	<result column="rentDept" property="rentDept"/>
-	<result column="rentPersoRn" property="rentPersoRn"/>
-	<result column="project" property="project"/>
-	<result column="sId" property="sId"/>
+<resultMap id="BaseResultMap" type="com.hxd.bean.Rent" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="startDate" jdbcType="TIMESTAMP" property="startDate"/>
+	<result column="expectDate" jdbcType="TIMESTAMP" property="expectDate"/>
+	<result column="actualDate" jdbcType="TIMESTAMP" property="actualDate"/>
+	<result column="Overdue" jdbcType="DECIMAL" property="overdue"/>
+	<result column="expectRental" jdbcType="DECIMAL" property="expectRental"/>
+	<result column="actualRental" jdbcType="DECIMAL" property="actualRental"/>
+	<result column="rentDept" jdbcType="VARCHAR" property="rentDept"/>
+	<result column="rentPersoRn" jdbcType="VARCHAR" property="rentPersoRn"/>
+	<result column="project" jdbcType="VARCHAR" property="project"/>
+	<result column="sId" jdbcType="INTEGER" property="sId"/>
 </resultMap>
        
 <!-- rent table all fields -->
@@ -28,45 +28,45 @@
 <sql id="Example_Where_Clause">
 where 1=1
 <trim  suffixOverrides="," >
-	<if test="condition.id != null and condition.id != ''" >
-	    and id =  #{condition.id}
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
 	</if>
-	<if test="condition.startDate != null and condition.startDate != ''" >
-	    and startDate =  #{condition.startDate}
+	<if test="startDate != null and startDate != ''" >
+	    and startDate =  #{startDate}
 	</if>
-	<if test="condition.expectDate != null and condition.expectDate != ''" >
-	    and expectDate =  #{condition.expectDate}
+	<if test="expectDate != null and expectDate != ''" >
+	    and expectDate =  #{expectDate}
 	</if>
-	<if test="condition.actualDate != null and condition.actualDate != ''" >
-	    and actualDate =  #{condition.actualDate}
+	<if test="actualDate != null and actualDate != ''" >
+	    and actualDate =  #{actualDate}
 	</if>
-	<if test="condition.overdue != null and condition.overdue != ''" >
-	    and Overdue =  #{condition.overdue}
+	<if test="overdue != null and overdue != ''" >
+	    and Overdue =  #{overdue}
 	</if>
-	<if test="condition.expectRental != null and condition.expectRental != ''" >
-	    and expectRental =  #{condition.expectRental}
+	<if test="expectRental != null and expectRental != ''" >
+	    and expectRental =  #{expectRental}
 	</if>
-	<if test="condition.actualRental != null and condition.actualRental != ''" >
-	    and actualRental =  #{condition.actualRental}
+	<if test="actualRental != null and actualRental != ''" >
+	    and actualRental =  #{actualRental}
 	</if>
-	<if test="condition.rentDept != null and condition.rentDept != ''" >
-	    and rentDept =  #{condition.rentDept}
+	<if test="rentDept != null and rentDept != ''" >
+	    and rentDept =  #{rentDept}
 	</if>
-	<if test="condition.rentPersoRn != null and condition.rentPersoRn != ''" >
-	    and rentPersoRn =  #{condition.rentPersoRn}
+	<if test="rentPersoRn != null and rentPersoRn != ''" >
+	    and rentPersoRn =  #{rentPersoRn}
 	</if>
-	<if test="condition.project != null and condition.project != ''" >
-	    and project =  #{condition.project}
+	<if test="project != null and project != ''" >
+	    and project =  #{project}
 	</if>
-	<if test="condition.sId != null and condition.sId != ''" >
-	    and sId =  #{condition.sId}
+	<if test="sId != null and sId != ''" >
+	    and sId =  #{sId}
 	</if>
 </trim>
 </sql>
    
 
 <!-- 插入记录 -->
-<insert id="add" parameterType="Object" >
+<insert id="insert" parameterType="Object" >
 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
   </selectKey>
@@ -148,12 +148,14 @@ where 1=1
 	<include refid="Base_Column_List"/>
 	from rent 
 	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-    <if test="limitClause != null and limitClause != ''" >
-       ${limitClause}
-    </if>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
 </select>
   	
 </mapper>   
