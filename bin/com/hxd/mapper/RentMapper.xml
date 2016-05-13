@@ -71,7 +71,7 @@ where 1=1
 	SELECT LAST_INSERT_ID()
   </selectKey>
   insert into rent(id,startDate,expectDate,actualDate,Overdue,expectRental,actualRental,rentDept,rentPersoRn,project,sId)
- values(#{id},#{startDate},#{expectDate},#{actualDate},#{overdue},#{expectRental},#{actualRental},#{rentDept},#{rentPersoRn},#{project},#{sId})
+ values(#{id,jdbcType=INTEGER},#{startDate,jdbcType=TIMESTAMP},#{expectDate,jdbcType=TIMESTAMP},#{actualDate,jdbcType=TIMESTAMP},#{overdue,jdbcType=DECIMAL},#{expectRental,jdbcType=DECIMAL},#{actualRental,jdbcType=DECIMAL},#{rentDept,jdbcType=VARCHAR},#{rentPersoRn,jdbcType=VARCHAR},#{project,jdbcType=VARCHAR},#{sId,jdbcType=INTEGER})
 </insert>
 
 <!-- 根据id，修改记录-->  

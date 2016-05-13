@@ -71,7 +71,7 @@ where 1=1
 	SELECT LAST_INSERT_ID()
   </selectKey>
   insert into carInfo(id,rentId,plateNum,brand,model,status,imgUrl,sId,createDate,delDate,orderId)
- values(#{id},#{rentId},#{plateNum},#{brand},#{model},#{status},#{imgUrl},#{sId},#{createDate},#{delDate},#{orderId})
+ values(#{id,jdbcType=INTEGER},#{rentId,jdbcType=INTEGER},#{plateNum,jdbcType=VARCHAR},#{brand,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{imgUrl,jdbcType=VARCHAR},#{sId,jdbcType=INTEGER},#{createDate,jdbcType=TIMESTAMP},#{delDate,jdbcType=TIMESTAMP},#{orderId,jdbcType=INTEGER})
 </insert>
 
 <!-- 根据id，修改记录-->  

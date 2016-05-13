@@ -298,7 +298,7 @@ public class CreateBean {
 
 	public Map<String, Object> getAutoCreateSql(String tableName) throws Exception {
 		Map sqlMap = new HashMap();
-		List columnDatas = getColumnDatas(tableName);
+		List<ColumnData> columnDatas = getColumnDatas(tableName);
 		String columns = getColumnSplit(columnDatas);
 		String formatColumns = getFormatColumnSplit(columnDatas);
 		String[] columnList = getColumnList(columns);
@@ -398,7 +398,7 @@ public class CreateBean {
 	public String getFormatColumnSplit(List<ColumnData> columnList) throws SQLException {
 		StringBuffer commonColumns = new StringBuffer();
 		for (ColumnData data : columnList) {
-			commonColumns.append(data.getFormatColumnName() + "|");
+			commonColumns.append(data.getFormatColumnName() + ",jdbcType=" + data.getColumnType() + "|");
 		}
 		return commonColumns.delete(commonColumns.length() - 1, commonColumns.length()).toString();
 	}

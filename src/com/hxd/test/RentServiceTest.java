@@ -50,6 +50,7 @@ public class RentServiceTest {
 	public void testList(){
 		try {
 			RentVo rentVo = new RentVo();
+			rentVo.setiDisplayLength(rentService.queryRentCount(rentVo));
 			List<Rent> rentList = rentService.queryRentByPage(rentVo);
 			System.out.println("返回总条数："+rentList.size());
 			for(Rent e : rentList){

@@ -38,7 +38,7 @@ public class CarInfoServiceTest {
 	public void testAdd(){
 		try {
 			CarInfo carInfo = new CarInfo();
-			carInfoService.insertCarInfoSelective(carInfo);
+			carInfoService.insertCarInfo(carInfo);
 			id = carInfo.getId();
 			System.out.println("-testAdd-----id---------"+id);
 		} catch (Exception e) {
@@ -50,6 +50,7 @@ public class CarInfoServiceTest {
 	public void testList(){
 		try {
 			CarInfoVo carInfoVo = new CarInfoVo();
+			carInfoVo.setiDisplayLength(carInfoService.queryCarInfoCount(carInfoVo));
 			List<CarInfo> carInfoList = carInfoService.queryCarInfoByPage(carInfoVo);
 			System.out.println("返回总条数："+carInfoList.size());
 			for(CarInfo e : carInfoList){
