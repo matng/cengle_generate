@@ -304,13 +304,15 @@ public class CreateBean {
 		String[] columnList = getColumnList(columns);
 		String columnFields = getColumnFields(columns);
 		String insert = "insert into " + tableName + "(" + columns.replaceAll("\\|", ",") + ")\n values(#{" + formatColumns.replaceAll("\\|", "},#{") + "})";
-		String update = getUpdateSql(tableName, columnList);
+		String insertSelective = getInsertSelectiveSql(tableName, columnDatas);
+		String update = getUpdateSql(tableName, columnList, columnDatas);
 		String updateSelective = getUpdateSelectiveSql(tableName, columnDatas);
-		String selectById = getSelectByIdSql(tableName, columnList);
-		String delete = getDeleteSql(tableName, columnList);
+		String selectById = getSelectByIdSql(tableName, columnList, columnDatas);
+		String delete = getDeleteSql(tableName, columnList, columnDatas);
 		sqlMap.put("columnList", columnList);
 		sqlMap.put("columnFields", columnFields);
 		sqlMap.put("insert", insert.replace("#{createTime}", "now()").replace("#{updateTime}", "now()"));
+		sqlMap.put("insertSelective", insertSelective.replace("#{createTime}", "now()").replace("#{updateTime}", "now()"));
 		sqlMap.put("update", update.replace("#{createTime}", "now()").replace("#{updateTime}", "now()"));
 		sqlMap.put("delete", delete);
 		sqlMap.put("updateSelective", updateSelective);
@@ -318,19 +320,19 @@ public class CreateBean {
 		return sqlMap;
 	}
 
-	public String getDeleteSql(String tableName, String[] columnsList) throws SQLException {
+	public String getDeleteSql(String tableName, String[] columnsList, List<ColumnData> columnData) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("delete ");
 		sb.append("\t from ").append(tableName).append(" where ");
-		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append("}");
+		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append(",jdbcType=" + columnData.get(0).getColumnType()).append("}");
 		return sb.toString();
 	}
 
-	public String getSelectByIdSql(String tableName, String[] columnsList) throws SQLException {
+	public String getSelectByIdSql(String tableName, String[] columnsList, List<ColumnData> columnData) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("select <include refid=\"Base_Column_List\" /> \n");
 		sb.append("\t from ").append(tableName).append(" where ");
-		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append("}");
+		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append(",jdbcType=" + columnData.get(0).getColumnType()).append("}");
 		return sb.toString();
 	}
 
@@ -347,7 +349,49 @@ public class CreateBean {
 		return columnList;
 	}
 
-	public String getUpdateSql(String tableName, String[] columnsList) throws SQLException {
+	
+	public String getInsertSelectiveSql(String tableName, List<ColumnData> columnList) throws SQLException {
+		StringBuffer sb = new StringBuffer();
+		ColumnData cd = (ColumnData) columnList.get(0);
+		sb.append("\n\t<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\n");
+		for (int i = 0; i < columnList.size(); i++) {
+			ColumnData data = (ColumnData) columnList.get(i);
+			String columnName = data.getColumnName();
+			sb.append("\t\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null ");
+
+			if ("String" == data.getDataType()) {
+				sb.append(" and ").append(CommUtil.formatName(columnName)).append(" != ''");
+			}
+			sb.append("\">\n\t\t\t");
+			sb.append(columnName + ",\n");
+			//sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + "},\n");
+			sb.append("\t\t</if>\n");
+		}
+		sb.append("\t</trim>");
+		
+		sb.append("\n\t<trim prefix=\"values (\" suffix=\")\" suffixOverrides=\",\">\n");
+		for (int i = 0; i < columnList.size(); i++) {
+			ColumnData data = (ColumnData) columnList.get(i);
+			String columnName = data.getColumnName();
+			sb.append("\t\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null ");
+
+			if ("String" == data.getDataType()) {
+				sb.append(" and ").append(CommUtil.formatName(columnName)).append(" != ''");
+			}
+			sb.append("\">\n\t\t\t");
+			sb.append("#{" + CommUtil.formatName(columnName) + ",jdbcType=" + columnList.get(i).getColumnType() + "},\n");
+			sb.append("\t\t</if>\n");
+		}
+		sb.append("\t</trim>");
+		
+		
+		
+		String update = "insert into " + tableName + sb.toString();
+		return update;
+	}
+
+	
+	public String getUpdateSql(String tableName, String[] columnsList, List<ColumnData> columnData) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 
 		for (int i = 1; i < columnsList.length; i++) {
@@ -356,13 +400,13 @@ public class CreateBean {
 				if ("UPDATETIME".equals(column.toUpperCase()))
 					sb.append(column + "=now()");
 				else {
-					sb.append(column + "=#{" + CommUtil.formatName(column) + "}");
+					sb.append(column + "=#{" + CommUtil.formatName(column) +",jdbcType=" + columnData.get(i).getColumnType() + "}");
 				}
 				if (i + 1 < columnsList.length)
 					sb.append(",");
 			}
 		}
-		String update = "update " + tableName + " set " + sb.toString() + " where " + columnsList[0] + "=#{" + CommUtil.formatName(columnsList[0]) + "}";
+		String update = "update " + tableName + " set " + sb.toString() + " where " + columnsList[0] + "=#{" + CommUtil.formatName(columnsList[0]) +",jdbcType=" + columnData.get(0).getColumnType() + "}";
 		return update;
 	}
 
@@ -379,11 +423,11 @@ public class CreateBean {
 				sb.append(" and ").append(CommUtil.formatName(columnName)).append(" != ''");
 			}
 			sb.append(" \">\n\t\t");
-			sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + "},\n");
+			sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + ",jdbcType=" + columnList.get(i).getColumnType() + "},\n");
 			sb.append("\t</if>\n");
 		}
 		sb.append("\t</trim>");
-		String update = "update " + tableName + " set \n" + sb.toString() + " where " + cd.getColumnName() + "=#{" + CommUtil.formatName(cd.getColumnName()) + "}";
+		String update = "update " + tableName + " set \n" + sb.toString() + " where " + cd.getColumnName() + "=#{" + CommUtil.formatName(cd.getColumnName()) + ",jdbcType=" + cd.getColumnType() + "}";
 		return update;
 	}
 

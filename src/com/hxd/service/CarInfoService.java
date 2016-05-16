@@ -14,7 +14,7 @@ import com.hxd.bean.CarInfo;
  */
 public interface CarInfoService{
 
-	String SERVICE_NAME = "CarInfoService";
+    String SERVICE_NAME = "CarInfoService";
 	
     int insertCarInfo(CarInfo record);
 
@@ -24,12 +24,14 @@ public interface CarInfoService{
 
     int deleteCarInfoByPrimaryKey(Integer id);
 
+    int deleteCarInfoByBatch(List<String> ids);
+
     int updateCarInfoByPrimaryKeySelective(CarInfo record);
 
     int updateCarInfoByPrimaryKey(CarInfo record);
     
-    List<CarInfo> queryCarInfoByPage(BaseVo page);
+    List<CarInfo> selectCarInfoByPage(BaseVo page);
     
-    int queryCarInfoCount(BaseVo page);
+    int selectCarInfoCount(BaseVo page);
 
 }

@@ -34,7 +34,7 @@ where 1=1
    
 
 <!-- 插入记录 -->
-<insert id="insert" parameterType="Object" >
+<insert id="insert" parameterType="${bussPackage}.bean#if($!entityPackage).${entityPackage}#end.$!{className}" >
 #if  ($keyType =='02')
 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
@@ -43,22 +43,26 @@ where 1=1
   $!{SQL.insert}
 </insert>
 
+<insert id="insertSelective" parameterType="${bussPackage}.bean#if($!entityPackage).${entityPackage}#end.$!{className}" >
+  $!{SQL.insertSelective}
+</insert>
+
 <!-- 根据id，修改记录-->  
- <update id="update" parameterType="Object" >
+ <update id="updateByPrimaryKey" parameterType="${bussPackage}.bean#if($!entityPackage).${entityPackage}#end.$!{className}" >
   $!{SQL.update}
  </update>
  
  <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateBySelective" parameterType="Object" >
+<update id="updateByPrimaryKeySelective" parameterType="${bussPackage}.bean#if($!entityPackage).${entityPackage}#end.$!{className}" >
 	$!{SQL.updateSelective}
 </update>
 
 <!-- 删除记录 -->
-<delete id="delete" parameterType="Object">
+<delete id="deleteByPrimaryKey" parameterType="Object">
 	$!{SQL.delete}
 </delete>
 
-<delete id="delete${className}ByBatch" parameterType="java.util.List">
+<delete id="deleteByBatch" parameterType="java.util.List">
   		delete from ${tableName}
   		<where>
  		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
@@ -68,18 +72,18 @@ where 1=1
   </delete>
  
 <!-- 根据id查询 ${codeName} -->
-<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="Object">
 	$!{SQL.selectById}
 </select>
 
 <!-- ${codeName} 列表总数-->
-<select id="query${className}ListCount" resultType="java.lang.Integer"  parameterType="Object">
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="Object">
 	select count(1) from ${tableName} 
 	<include refid="Example_Where_Clause"/>
 </select>
   	
 <!-- 查询${codeName}列表 -->
-<select id="query${className}ListByPage" resultMap="BaseResultMap"  parameterType="Object">
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="Object">
 	select 
 	<include refid="Base_Column_List"/>
 	from ${tableName} 

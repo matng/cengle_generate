@@ -50,8 +50,8 @@ public class CarInfoServiceTest {
 	public void testList(){
 		try {
 			CarInfoVo carInfoVo = new CarInfoVo();
-			carInfoVo.setiDisplayLength(carInfoService.queryCarInfoCount(carInfoVo));
-			List<CarInfo> carInfoList = carInfoService.queryCarInfoByPage(carInfoVo);
+			carInfoVo.setiDisplayLength(carInfoService.selectCarInfoCount(carInfoVo));
+			List<CarInfo> carInfoList = carInfoService.selectCarInfoByPage(carInfoVo);
 			System.out.println("返回总条数："+carInfoList.size());
 			for(CarInfo e : carInfoList){
 				System.out.println(e.getId());

@@ -38,7 +38,7 @@ public class ${className}ServiceTest {
 	public void testAdd(){
 		try {
 			${className} $!{lowerName} = new ${className}();
-			$!{lowerName}Service.insert${className}Selective($!{lowerName});
+			$!{lowerName}Service.insert${className}($!{lowerName});
 			id = $!{lowerName}.getId();
 			System.out.println("-testAdd-----id---------"+id);
 		} catch (Exception e) {
@@ -50,8 +50,8 @@ public class ${className}ServiceTest {
 	public void testList(){
 		try {
 			${className}Vo $!{lowerName}Vo = new ${className}Vo();
-			$!{lowerName}Vo.setiDisplayLength($!{lowerName}Service.query${className}Count($!{lowerName}Vo));
-			List<${className}> $!{lowerName}List = $!{lowerName}Service.query${className}ByPage($!{lowerName}Vo);
+			$!{lowerName}Vo.setiDisplayLength($!{lowerName}Service.select${className}Count($!{lowerName}Vo));
+			List<${className}> $!{lowerName}List = $!{lowerName}Service.select${className}ByPage($!{lowerName}Vo);
 			System.out.println("返回总条数："+$!{lowerName}List.size());
 			for(${className} e : $!{lowerName}List){
 				System.out.println(e.getId());

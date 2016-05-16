@@ -12,11 +12,13 @@ import ${bussPackage}.bean.${className};
  */
 public interface ${className}Mapper {
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(${className} record);
 
     int insertSelective(${className} record);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int deleteByBatch(List<Integer> ids);
 
     ${className} selectByPrimaryKey(Integer id);
 
@@ -24,8 +26,8 @@ public interface ${className}Mapper {
 
     int updateByPrimaryKey(${className} record);
     
-    List<${className}> query${className}ListByPage(BaseVo page,RowBounds rb);
+    List<${className}> selectListByPage(BaseVo page,RowBounds rb);
     
-    int query${className}ListCount(BaseVo page);
+    int selectListCount(BaseVo page);
 	
 }

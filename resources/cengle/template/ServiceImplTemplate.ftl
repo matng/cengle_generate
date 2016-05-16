@@ -1,6 +1,7 @@
 package ${bussPackage}.service.impl#if($!entityPackage).${entityPackage}#end;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -40,6 +41,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("${className}ServiceImpl insert${className} failed!");
 		}
 		return -1;
@@ -52,6 +54,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("${className}ServiceImpl insert${className}Selective failed!");
 		}
 		// TODO Auto-generated method stub
@@ -64,6 +67,24 @@ public class ${className}ServiceImpl implements ${className}Service {
 			return ${className}Dao.deleteByPrimaryKey(id);
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error(e);
+			e.printStackTrace();
+			log.info("${className}ServiceImpl delete${className}ByPrimaryKey failed!");
+		}
+		return -1;
+	}
+
+	public int delete${className}ByBatch(List<String> ids) {
+		// TODO Auto-generated method stub
+		try {
+			List<Integer> idList = new ArrayList<Integer>();
+
+			for (String idString : ids) {
+				idList.add(Integer.parseInt(idString));
+			}
+			return ${className}Dao.deleteByBatch(idList);
+		} catch (Exception e) {
+			log.error(e);
 			e.printStackTrace();
 			log.info("${className}ServiceImpl delete${className}ByPrimaryKey failed!");
 		}
@@ -77,6 +98,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("${className}ServiceImpl select${className}ByPrimaryKey failed!");
 		}
 		return null;
@@ -89,6 +111,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("${className}ServiceImpl update${className}ByPrimaryKeySelective failed!");
 		}
 		return -1;
@@ -101,30 +124,33 @@ public class ${className}ServiceImpl implements ${className}Service {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("${className}ServiceImpl update${className}ByPrimaryKey failed!");
 		}
 		return -1;
 	}
 
-	public List<${className}> query${className}ByPage(BaseVo page) {
+	public List<${className}> select${className}ByPage(BaseVo page) {
 		try {
 			RowBounds rb = new RowBounds(page.getiDisplayStart(), page.getiDisplayLength());
-			return ${className}Dao.query${className}ListByPage(page,rb);
+			return ${className}Dao.selectListByPage(page,rb);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			log.info("${className}ServiceImpl query${className}ByPage failed!");
+			log.error(e);
+			log.info("${className}ServiceImpl select${className}ByPage failed!");
 		}
 		return null;
 	}
 
-	public int query${className}Count(BaseVo page) {
+	public int select${className}Count(BaseVo page) {
 		  try {
-				return ${className}Dao.query${className}ListCount(page);
+				return ${className}Dao.selectListCount(page);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				log.info("${className}ServiceImpl query${className}Count failed!");
+			         log.error(e);
+				log.info("${className}ServiceImpl select${className}Count failed!");
 			}
 			  
 			  return -1;

@@ -38,7 +38,7 @@ public class RentServiceTest {
 	public void testAdd(){
 		try {
 			Rent rent = new Rent();
-			rentService.insertRentSelective(rent);
+			rentService.insertRent(rent);
 			id = rent.getId();
 			System.out.println("-testAdd-----id---------"+id);
 		} catch (Exception e) {
@@ -50,8 +50,8 @@ public class RentServiceTest {
 	public void testList(){
 		try {
 			RentVo rentVo = new RentVo();
-			rentVo.setiDisplayLength(rentService.queryRentCount(rentVo));
-			List<Rent> rentList = rentService.queryRentByPage(rentVo);
+			rentVo.setiDisplayLength(rentService.selectRentCount(rentVo));
+			List<Rent> rentList = rentService.selectRentByPage(rentVo);
 			System.out.println("返回总条数："+rentList.size());
 			for(Rent e : rentList){
 				System.out.println(e.getId());

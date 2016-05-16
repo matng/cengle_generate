@@ -1,6 +1,7 @@
 package com.hxd.service.impl;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -40,6 +41,7 @@ public class RentServiceImpl implements RentService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("RentServiceImpl insertRent failed!");
 		}
 		return -1;
@@ -52,6 +54,7 @@ public class RentServiceImpl implements RentService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("RentServiceImpl insertRentSelective failed!");
 		}
 		// TODO Auto-generated method stub
@@ -64,6 +67,24 @@ public class RentServiceImpl implements RentService {
 			return RentDao.deleteByPrimaryKey(id);
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error(e);
+			e.printStackTrace();
+			log.info("RentServiceImpl deleteRentByPrimaryKey failed!");
+		}
+		return -1;
+	}
+
+	public int deleteRentByBatch(List<String> ids) {
+		// TODO Auto-generated method stub
+		try {
+			List<Integer> idList = new ArrayList<Integer>();
+
+			for (String idString : ids) {
+				idList.add(Integer.parseInt(idString));
+			}
+			return RentDao.deleteByBatch(idList);
+		} catch (Exception e) {
+			log.error(e);
 			e.printStackTrace();
 			log.info("RentServiceImpl deleteRentByPrimaryKey failed!");
 		}
@@ -77,6 +98,7 @@ public class RentServiceImpl implements RentService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("RentServiceImpl selectRentByPrimaryKey failed!");
 		}
 		return null;
@@ -89,6 +111,7 @@ public class RentServiceImpl implements RentService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("RentServiceImpl updateRentByPrimaryKeySelective failed!");
 		}
 		return -1;
@@ -101,30 +124,33 @@ public class RentServiceImpl implements RentService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("RentServiceImpl updateRentByPrimaryKey failed!");
 		}
 		return -1;
 	}
 
-	public List<Rent> queryRentByPage(BaseVo page) {
+	public List<Rent> selectRentByPage(BaseVo page) {
 		try {
 			RowBounds rb = new RowBounds(page.getiDisplayStart(), page.getiDisplayLength());
-			return RentDao.queryRentListByPage(page,rb);
+			return RentDao.selectListByPage(page,rb);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			log.info("RentServiceImpl queryRentByPage failed!");
+			log.error(e);
+			log.info("RentServiceImpl selectRentByPage failed!");
 		}
 		return null;
 	}
 
-	public int queryRentCount(BaseVo page) {
+	public int selectRentCount(BaseVo page) {
 		  try {
-				return RentDao.queryRentListCount(page);
+				return RentDao.selectListCount(page);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				log.info("RentServiceImpl queryRentCount failed!");
+			         log.error(e);
+				log.info("RentServiceImpl selectRentCount failed!");
 			}
 			  
 			  return -1;

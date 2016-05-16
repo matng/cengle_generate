@@ -1,6 +1,7 @@
 package com.hxd.service.impl;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -40,6 +41,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("CarInfoServiceImpl insertCarInfo failed!");
 		}
 		return -1;
@@ -52,6 +54,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("CarInfoServiceImpl insertCarInfoSelective failed!");
 		}
 		// TODO Auto-generated method stub
@@ -64,6 +67,24 @@ public class CarInfoServiceImpl implements CarInfoService {
 			return CarInfoDao.deleteByPrimaryKey(id);
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error(e);
+			e.printStackTrace();
+			log.info("CarInfoServiceImpl deleteCarInfoByPrimaryKey failed!");
+		}
+		return -1;
+	}
+
+	public int deleteCarInfoByBatch(List<String> ids) {
+		// TODO Auto-generated method stub
+		try {
+			List<Integer> idList = new ArrayList<Integer>();
+
+			for (String idString : ids) {
+				idList.add(Integer.parseInt(idString));
+			}
+			return CarInfoDao.deleteByBatch(idList);
+		} catch (Exception e) {
+			log.error(e);
 			e.printStackTrace();
 			log.info("CarInfoServiceImpl deleteCarInfoByPrimaryKey failed!");
 		}
@@ -77,6 +98,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("CarInfoServiceImpl selectCarInfoByPrimaryKey failed!");
 		}
 		return null;
@@ -89,6 +111,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("CarInfoServiceImpl updateCarInfoByPrimaryKeySelective failed!");
 		}
 		return -1;
@@ -101,30 +124,33 @@ public class CarInfoServiceImpl implements CarInfoService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			log.error(e);
 			log.info("CarInfoServiceImpl updateCarInfoByPrimaryKey failed!");
 		}
 		return -1;
 	}
 
-	public List<CarInfo> queryCarInfoByPage(BaseVo page) {
+	public List<CarInfo> selectCarInfoByPage(BaseVo page) {
 		try {
 			RowBounds rb = new RowBounds(page.getiDisplayStart(), page.getiDisplayLength());
-			return CarInfoDao.queryCarInfoListByPage(page,rb);
+			return CarInfoDao.selectListByPage(page,rb);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			log.info("CarInfoServiceImpl queryCarInfoByPage failed!");
+			log.error(e);
+			log.info("CarInfoServiceImpl selectCarInfoByPage failed!");
 		}
 		return null;
 	}
 
-	public int queryCarInfoCount(BaseVo page) {
+	public int selectCarInfoCount(BaseVo page) {
 		  try {
-				return CarInfoDao.queryCarInfoListCount(page);
+				return CarInfoDao.selectListCount(page);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				log.info("CarInfoServiceImpl queryCarInfoCount failed!");
+			         log.error(e);
+				log.info("CarInfoServiceImpl selectCarInfoCount failed!");
 			}
 			  
 			  return -1;

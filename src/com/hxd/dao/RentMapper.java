@@ -12,11 +12,13 @@ import com.hxd.bean.Rent;
  */
 public interface RentMapper {
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(Rent record);
 
     int insertSelective(Rent record);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int deleteByBatch(List<Integer> ids);
 
     Rent selectByPrimaryKey(Integer id);
 
@@ -24,8 +26,8 @@ public interface RentMapper {
 
     int updateByPrimaryKey(Rent record);
     
-    List<Rent> queryRentListByPage(BaseVo page,RowBounds rb);
+    List<Rent> selectListByPage(BaseVo page,RowBounds rb);
     
-    int queryRentListCount(BaseVo page);
+    int selectListCount(BaseVo page);
 	
 }

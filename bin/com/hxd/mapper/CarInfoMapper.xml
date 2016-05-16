@@ -66,7 +66,7 @@ where 1=1
    
 
 <!-- 插入记录 -->
-<insert id="insert" parameterType="Object" >
+<insert id="insert" parameterType="com.hxd.bean.CarInfo" >
 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
   </selectKey>
@@ -74,54 +74,128 @@ where 1=1
  values(#{id,jdbcType=INTEGER},#{rentId,jdbcType=INTEGER},#{plateNum,jdbcType=VARCHAR},#{brand,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{imgUrl,jdbcType=VARCHAR},#{sId,jdbcType=INTEGER},#{createDate,jdbcType=TIMESTAMP},#{delDate,jdbcType=TIMESTAMP},#{orderId,jdbcType=INTEGER})
 </insert>
 
+<insert id="insertSelective" parameterType="com.hxd.bean.CarInfo" >
+  insert into carInfo
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="rentId != null ">
+			rentId,
+		</if>
+		<if test="plateNum != null ">
+			plateNum,
+		</if>
+		<if test="brand != null ">
+			brand,
+		</if>
+		<if test="model != null ">
+			model,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+		<if test="imgUrl != null ">
+			imgUrl,
+		</if>
+		<if test="sId != null ">
+			sId,
+		</if>
+		<if test="createDate != null ">
+			createDate,
+		</if>
+		<if test="delDate != null ">
+			delDate,
+		</if>
+		<if test="orderId != null ">
+			orderId,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="rentId != null ">
+			#{rentId,jdbcType=INTEGER},
+		</if>
+		<if test="plateNum != null ">
+			#{plateNum,jdbcType=VARCHAR},
+		</if>
+		<if test="brand != null ">
+			#{brand,jdbcType=VARCHAR},
+		</if>
+		<if test="model != null ">
+			#{model,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+		<if test="imgUrl != null ">
+			#{imgUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="sId != null ">
+			#{sId,jdbcType=INTEGER},
+		</if>
+		<if test="createDate != null ">
+			#{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delDate != null ">
+			#{delDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="orderId != null ">
+			#{orderId,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
 <!-- 根据id，修改记录-->  
- <update id="update" parameterType="Object" >
-  update carInfo set rentId=#{rentId},plateNum=#{plateNum},brand=#{brand},model=#{model},status=#{status},imgUrl=#{imgUrl},sId=#{sId},createDate=#{createDate},delDate=#{delDate},orderId=#{orderId} where id=#{id}
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.CarInfo" >
+  update carInfo set rentId=#{rentId,jdbcType=INTEGER},plateNum=#{plateNum,jdbcType=VARCHAR},brand=#{brand,jdbcType=VARCHAR},model=#{model,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER},imgUrl=#{imgUrl,jdbcType=VARCHAR},sId=#{sId,jdbcType=INTEGER},createDate=#{createDate,jdbcType=TIMESTAMP},delDate=#{delDate,jdbcType=TIMESTAMP},orderId=#{orderId,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
  </update>
  
  <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateBySelective" parameterType="Object" >
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.CarInfo" >
 	update carInfo set 
 	<trim  suffixOverrides="," >
 	<if test="rentId != null  ">
-		rentId=#{rentId},
+		rentId=#{rentId,jdbcType=INTEGER},
 	</if>
 	<if test="plateNum != null  ">
-		plateNum=#{plateNum},
+		plateNum=#{plateNum,jdbcType=VARCHAR},
 	</if>
 	<if test="brand != null  ">
-		brand=#{brand},
+		brand=#{brand,jdbcType=VARCHAR},
 	</if>
 	<if test="model != null  ">
-		model=#{model},
+		model=#{model,jdbcType=VARCHAR},
 	</if>
 	<if test="status != null  ">
-		status=#{status},
+		status=#{status,jdbcType=INTEGER},
 	</if>
 	<if test="imgUrl != null  ">
-		imgUrl=#{imgUrl},
+		imgUrl=#{imgUrl,jdbcType=VARCHAR},
 	</if>
 	<if test="sId != null  ">
-		sId=#{sId},
+		sId=#{sId,jdbcType=INTEGER},
 	</if>
 	<if test="createDate != null  ">
-		createDate=#{createDate},
+		createDate=#{createDate,jdbcType=TIMESTAMP},
 	</if>
 	<if test="delDate != null  ">
-		delDate=#{delDate},
+		delDate=#{delDate,jdbcType=TIMESTAMP},
 	</if>
 	<if test="orderId != null  ">
-		orderId=#{orderId},
+		orderId=#{orderId,jdbcType=INTEGER},
 	</if>
-	</trim> where id=#{id}
+	</trim> where id=#{id,jdbcType=INTEGER}
 </update>
 
 <!-- 删除记录 -->
-<delete id="delete" parameterType="Object">
-	delete 	 from carInfo where id = #{id}
+<delete id="deleteByPrimaryKey" parameterType="Object">
+	delete 	 from carInfo where id = #{id,jdbcType=INTEGER}
 </delete>
 
-<delete id="deleteCarInfoByBatch" parameterType="java.util.List">
+<delete id="deleteByBatch" parameterType="java.util.List">
   		delete from carInfo
   		<where>
  		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
@@ -131,19 +205,19 @@ where 1=1
   </delete>
  
 <!-- 根据id查询 车辆信息表 -->
-<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="Object">
 	select <include refid="Base_Column_List" /> 
-	 from carInfo where id = #{id}
+	 from carInfo where id = #{id,jdbcType=INTEGER}
 </select>
 
 <!-- 车辆信息表 列表总数-->
-<select id="queryCarInfoListCount" resultType="java.lang.Integer"  parameterType="Object">
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="Object">
 	select count(1) from carInfo 
 	<include refid="Example_Where_Clause"/>
 </select>
   	
 <!-- 查询车辆信息表列表 -->
-<select id="queryCarInfoListByPage" resultMap="BaseResultMap"  parameterType="Object">
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="Object">
 	select 
 	<include refid="Base_Column_List"/>
 	from carInfo 

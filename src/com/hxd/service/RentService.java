@@ -14,7 +14,7 @@ import com.hxd.bean.Rent;
  */
 public interface RentService{
 
-	String SERVICE_NAME = "RentService";
+    String SERVICE_NAME = "RentService";
 	
     int insertRent(Rent record);
 
@@ -24,12 +24,14 @@ public interface RentService{
 
     int deleteRentByPrimaryKey(Integer id);
 
+    int deleteRentByBatch(List<String> ids);
+
     int updateRentByPrimaryKeySelective(Rent record);
 
     int updateRentByPrimaryKey(Rent record);
     
-    List<Rent> queryRentByPage(BaseVo page);
+    List<Rent> selectRentByPage(BaseVo page);
     
-    int queryRentCount(BaseVo page);
+    int selectRentCount(BaseVo page);
 
 }

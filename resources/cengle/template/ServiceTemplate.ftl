@@ -14,7 +14,7 @@ import ${bussPackage}.bean.${className};
  */
 public interface ${className}Service{
 
-	String SERVICE_NAME = "${className}Service";
+    String SERVICE_NAME = "${className}Service";
 	
     int insert${className}(${className} record);
 
@@ -24,12 +24,14 @@ public interface ${className}Service{
 
     int delete${className}ByPrimaryKey(Integer id);
 
+    int delete${className}ByBatch(List<String> ids);
+
     int update${className}ByPrimaryKeySelective(${className} record);
 
     int update${className}ByPrimaryKey(${className} record);
     
-    List<${className}> query${className}ByPage(BaseVo page);
+    List<${className}> select${className}ByPage(BaseVo page);
     
-    int query${className}Count(BaseVo page);
+    int select${className}Count(BaseVo page);
 
 }

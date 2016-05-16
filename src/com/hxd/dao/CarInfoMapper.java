@@ -12,11 +12,13 @@ import com.hxd.bean.CarInfo;
  */
 public interface CarInfoMapper {
 
-    int deleteByPrimaryKey(Integer id);
-
     int insert(CarInfo record);
 
     int insertSelective(CarInfo record);
+
+    int deleteByPrimaryKey(Integer id);
+
+    int deleteByBatch(List<Integer> ids);
 
     CarInfo selectByPrimaryKey(Integer id);
 
@@ -24,8 +26,8 @@ public interface CarInfoMapper {
 
     int updateByPrimaryKey(CarInfo record);
     
-    List<CarInfo> queryCarInfoListByPage(BaseVo page,RowBounds rb);
+    List<CarInfo> selectListByPage(BaseVo page,RowBounds rb);
     
-    int queryCarInfoListCount(BaseVo page);
+    int selectListCount(BaseVo page);
 	
 }

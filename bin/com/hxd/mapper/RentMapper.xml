@@ -66,7 +66,7 @@ where 1=1
    
 
 <!-- 插入记录 -->
-<insert id="insert" parameterType="Object" >
+<insert id="insert" parameterType="com.hxd.bean.Rent" >
 <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
 	SELECT LAST_INSERT_ID()
   </selectKey>
@@ -74,54 +74,128 @@ where 1=1
  values(#{id,jdbcType=INTEGER},#{startDate,jdbcType=TIMESTAMP},#{expectDate,jdbcType=TIMESTAMP},#{actualDate,jdbcType=TIMESTAMP},#{overdue,jdbcType=DECIMAL},#{expectRental,jdbcType=DECIMAL},#{actualRental,jdbcType=DECIMAL},#{rentDept,jdbcType=VARCHAR},#{rentPersoRn,jdbcType=VARCHAR},#{project,jdbcType=VARCHAR},#{sId,jdbcType=INTEGER})
 </insert>
 
+<insert id="insertSelective" parameterType="com.hxd.bean.Rent" >
+  insert into rent
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="startDate != null ">
+			startDate,
+		</if>
+		<if test="expectDate != null ">
+			expectDate,
+		</if>
+		<if test="actualDate != null ">
+			actualDate,
+		</if>
+		<if test="overdue != null ">
+			Overdue,
+		</if>
+		<if test="expectRental != null ">
+			expectRental,
+		</if>
+		<if test="actualRental != null ">
+			actualRental,
+		</if>
+		<if test="rentDept != null ">
+			rentDept,
+		</if>
+		<if test="rentPersoRn != null ">
+			rentPersoRn,
+		</if>
+		<if test="project != null ">
+			project,
+		</if>
+		<if test="sId != null ">
+			sId,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="startDate != null ">
+			#{startDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="expectDate != null ">
+			#{expectDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="actualDate != null ">
+			#{actualDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="overdue != null ">
+			#{overdue,jdbcType=DECIMAL},
+		</if>
+		<if test="expectRental != null ">
+			#{expectRental,jdbcType=DECIMAL},
+		</if>
+		<if test="actualRental != null ">
+			#{actualRental,jdbcType=DECIMAL},
+		</if>
+		<if test="rentDept != null ">
+			#{rentDept,jdbcType=VARCHAR},
+		</if>
+		<if test="rentPersoRn != null ">
+			#{rentPersoRn,jdbcType=VARCHAR},
+		</if>
+		<if test="project != null ">
+			#{project,jdbcType=VARCHAR},
+		</if>
+		<if test="sId != null ">
+			#{sId,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
 <!-- 根据id，修改记录-->  
- <update id="update" parameterType="Object" >
-  update rent set startDate=#{startDate},expectDate=#{expectDate},actualDate=#{actualDate},Overdue=#{overdue},expectRental=#{expectRental},actualRental=#{actualRental},rentDept=#{rentDept},rentPersoRn=#{rentPersoRn},project=#{project},sId=#{sId} where id=#{id}
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.Rent" >
+  update rent set startDate=#{startDate,jdbcType=TIMESTAMP},expectDate=#{expectDate,jdbcType=TIMESTAMP},actualDate=#{actualDate,jdbcType=TIMESTAMP},Overdue=#{overdue,jdbcType=DECIMAL},expectRental=#{expectRental,jdbcType=DECIMAL},actualRental=#{actualRental,jdbcType=DECIMAL},rentDept=#{rentDept,jdbcType=VARCHAR},rentPersoRn=#{rentPersoRn,jdbcType=VARCHAR},project=#{project,jdbcType=VARCHAR},sId=#{sId,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
  </update>
  
  <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateBySelective" parameterType="Object" >
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.Rent" >
 	update rent set 
 	<trim  suffixOverrides="," >
 	<if test="startDate != null  ">
-		startDate=#{startDate},
+		startDate=#{startDate,jdbcType=TIMESTAMP},
 	</if>
 	<if test="expectDate != null  ">
-		expectDate=#{expectDate},
+		expectDate=#{expectDate,jdbcType=TIMESTAMP},
 	</if>
 	<if test="actualDate != null  ">
-		actualDate=#{actualDate},
+		actualDate=#{actualDate,jdbcType=TIMESTAMP},
 	</if>
 	<if test="overdue != null  ">
-		Overdue=#{overdue},
+		Overdue=#{overdue,jdbcType=DECIMAL},
 	</if>
 	<if test="expectRental != null  ">
-		expectRental=#{expectRental},
+		expectRental=#{expectRental,jdbcType=DECIMAL},
 	</if>
 	<if test="actualRental != null  ">
-		actualRental=#{actualRental},
+		actualRental=#{actualRental,jdbcType=DECIMAL},
 	</if>
 	<if test="rentDept != null  ">
-		rentDept=#{rentDept},
+		rentDept=#{rentDept,jdbcType=VARCHAR},
 	</if>
 	<if test="rentPersoRn != null  ">
-		rentPersoRn=#{rentPersoRn},
+		rentPersoRn=#{rentPersoRn,jdbcType=VARCHAR},
 	</if>
 	<if test="project != null  ">
-		project=#{project},
+		project=#{project,jdbcType=VARCHAR},
 	</if>
 	<if test="sId != null  ">
-		sId=#{sId},
+		sId=#{sId,jdbcType=INTEGER},
 	</if>
-	</trim> where id=#{id}
+	</trim> where id=#{id,jdbcType=INTEGER}
 </update>
 
 <!-- 删除记录 -->
-<delete id="delete" parameterType="Object">
-	delete 	 from rent where id = #{id}
+<delete id="deleteByPrimaryKey" parameterType="Object">
+	delete 	 from rent where id = #{id,jdbcType=INTEGER}
 </delete>
 
-<delete id="deleteRentByBatch" parameterType="java.util.List">
+<delete id="deleteByBatch" parameterType="java.util.List">
   		delete from rent
   		<where>
  		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
@@ -131,19 +205,19 @@ where 1=1
   </delete>
  
 <!-- 根据id查询 租借信息表 -->
-<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="Object">
 	select <include refid="Base_Column_List" /> 
-	 from rent where id = #{id}
+	 from rent where id = #{id,jdbcType=INTEGER}
 </select>
 
 <!-- 租借信息表 列表总数-->
-<select id="queryRentListCount" resultType="java.lang.Integer"  parameterType="Object">
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="Object">
 	select count(1) from rent 
 	<include refid="Example_Where_Clause"/>
 </select>
   	
 <!-- 查询租借信息表列表 -->
-<select id="queryRentListByPage" resultMap="BaseResultMap"  parameterType="Object">
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="Object">
 	select 
 	<include refid="Base_Column_List"/>
 	from rent 
