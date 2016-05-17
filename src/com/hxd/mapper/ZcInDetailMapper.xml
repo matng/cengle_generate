@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcInDetailMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcInDetail" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="zcId" jdbcType="INTEGER" property="zcId"/>
+	<result column="zcInId" jdbcType="INTEGER" property="zcInId"/>
+	<result column="zcInItemId" jdbcType="INTEGER" property="zcInItemId"/>
+	<result column="tagSN" jdbcType="VARCHAR" property="tagSN"/>
+	<result column="cwSN" jdbcType="VARCHAR" property="cwSN"/>
+	<result column="unitPrice" jdbcType="DECIMAL" property="unitPrice"/>
+	<result column="amount" jdbcType="INTEGER" property="amount"/>
+	<result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="zcSNSerial" jdbcType="VARCHAR" property="zcSNSerial"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+	<result column="localId" jdbcType="INTEGER" property="localId"/>
+	<result column="useDeptId" jdbcType="INTEGER" property="useDeptId"/>
+	<result column="useUid" jdbcType="INTEGER" property="useUid"/>
+	<result column="baoxiuDate" jdbcType="TIMESTAMP" property="baoxiuDate"/>
+</resultMap>
+       
+<!-- zcInDetail table all fields -->
+<sql id="Base_Column_List" >
+	 id,zcId,zcInId,zcInItemId,tagSN,cwSN,unitPrice,amount,addTime,zcSNSerial,status,localId,useDeptId,useUid,baoxiuDate
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="zcId != null and zcId != ''" >
+	    and zcId =  #{zcId}
+	</if>
+	<if test="zcInId != null and zcInId != ''" >
+	    and zcInId =  #{zcInId}
+	</if>
+	<if test="zcInItemId != null and zcInItemId != ''" >
+	    and zcInItemId =  #{zcInItemId}
+	</if>
+	<if test="tagSN != null and tagSN != ''" >
+	    and tagSN =  #{tagSN}
+	</if>
+	<if test="cwSN != null and cwSN != ''" >
+	    and cwSN =  #{cwSN}
+	</if>
+	<if test="unitPrice != null and unitPrice != ''" >
+	    and unitPrice =  #{unitPrice}
+	</if>
+	<if test="amount != null and amount != ''" >
+	    and amount =  #{amount}
+	</if>
+	<if test="addTime != null and addTime != ''" >
+	    and addTime =  #{addTime}
+	</if>
+	<if test="zcSNSerial != null and zcSNSerial != ''" >
+	    and zcSNSerial =  #{zcSNSerial}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+	<if test="localId != null and localId != ''" >
+	    and localId =  #{localId}
+	</if>
+	<if test="useDeptId != null and useDeptId != ''" >
+	    and useDeptId =  #{useDeptId}
+	</if>
+	<if test="useUid != null and useUid != ''" >
+	    and useUid =  #{useUid}
+	</if>
+	<if test="baoxiuDate != null and baoxiuDate != ''" >
+	    and baoxiuDate =  #{baoxiuDate}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcInDetail" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcInDetail(id,zcId,zcInId,zcInItemId,tagSN,cwSN,unitPrice,amount,addTime,zcSNSerial,status,localId,useDeptId,useUid,baoxiuDate)
+ values(#{id,jdbcType=INTEGER},#{zcId,jdbcType=INTEGER},#{zcInId,jdbcType=INTEGER},#{zcInItemId,jdbcType=INTEGER},#{tagSN,jdbcType=VARCHAR},#{cwSN,jdbcType=VARCHAR},#{unitPrice,jdbcType=DECIMAL},#{amount,jdbcType=INTEGER},#{addTime,jdbcType=TIMESTAMP},#{zcSNSerial,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{localId,jdbcType=INTEGER},#{useDeptId,jdbcType=INTEGER},#{useUid,jdbcType=INTEGER},#{baoxiuDate,jdbcType=TIMESTAMP})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcInDetail" >
+  insert into zcInDetail
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="zcId != null ">
+			zcId,
+		</if>
+		<if test="zcInId != null ">
+			zcInId,
+		</if>
+		<if test="zcInItemId != null ">
+			zcInItemId,
+		</if>
+		<if test="tagSN != null ">
+			tagSN,
+		</if>
+		<if test="cwSN != null ">
+			cwSN,
+		</if>
+		<if test="unitPrice != null ">
+			unitPrice,
+		</if>
+		<if test="amount != null ">
+			amount,
+		</if>
+		<if test="addTime != null ">
+			addTime,
+		</if>
+		<if test="zcSNSerial != null ">
+			zcSNSerial,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+		<if test="localId != null ">
+			localId,
+		</if>
+		<if test="useDeptId != null ">
+			useDeptId,
+		</if>
+		<if test="useUid != null ">
+			useUid,
+		</if>
+		<if test="baoxiuDate != null ">
+			baoxiuDate,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="zcId != null ">
+			#{zcId,jdbcType=INTEGER},
+		</if>
+		<if test="zcInId != null ">
+			#{zcInId,jdbcType=INTEGER},
+		</if>
+		<if test="zcInItemId != null ">
+			#{zcInItemId,jdbcType=INTEGER},
+		</if>
+		<if test="tagSN != null ">
+			#{tagSN,jdbcType=VARCHAR},
+		</if>
+		<if test="cwSN != null ">
+			#{cwSN,jdbcType=VARCHAR},
+		</if>
+		<if test="unitPrice != null ">
+			#{unitPrice,jdbcType=DECIMAL},
+		</if>
+		<if test="amount != null ">
+			#{amount,jdbcType=INTEGER},
+		</if>
+		<if test="addTime != null ">
+			#{addTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="zcSNSerial != null ">
+			#{zcSNSerial,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+		<if test="localId != null ">
+			#{localId,jdbcType=INTEGER},
+		</if>
+		<if test="useDeptId != null ">
+			#{useDeptId,jdbcType=INTEGER},
+		</if>
+		<if test="useUid != null ">
+			#{useUid,jdbcType=INTEGER},
+		</if>
+		<if test="baoxiuDate != null ">
+			#{baoxiuDate,jdbcType=TIMESTAMP},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcInDetail" >
+  update zcInDetail set zcId=#{zcId,jdbcType=INTEGER},zcInId=#{zcInId,jdbcType=INTEGER},zcInItemId=#{zcInItemId,jdbcType=INTEGER},tagSN=#{tagSN,jdbcType=VARCHAR},cwSN=#{cwSN,jdbcType=VARCHAR},unitPrice=#{unitPrice,jdbcType=DECIMAL},amount=#{amount,jdbcType=INTEGER},addTime=#{addTime,jdbcType=TIMESTAMP},zcSNSerial=#{zcSNSerial,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER},localId=#{localId,jdbcType=INTEGER},useDeptId=#{useDeptId,jdbcType=INTEGER},useUid=#{useUid,jdbcType=INTEGER},baoxiuDate=#{baoxiuDate,jdbcType=TIMESTAMP} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcInDetail" >
+	update zcInDetail set 
+	<trim  suffixOverrides="," >
+	<if test="zcId != null  ">
+		zcId=#{zcId,jdbcType=INTEGER},
+	</if>
+	<if test="zcInId != null  ">
+		zcInId=#{zcInId,jdbcType=INTEGER},
+	</if>
+	<if test="zcInItemId != null  ">
+		zcInItemId=#{zcInItemId,jdbcType=INTEGER},
+	</if>
+	<if test="tagSN != null  ">
+		tagSN=#{tagSN,jdbcType=VARCHAR},
+	</if>
+	<if test="cwSN != null  ">
+		cwSN=#{cwSN,jdbcType=VARCHAR},
+	</if>
+	<if test="unitPrice != null  ">
+		unitPrice=#{unitPrice,jdbcType=DECIMAL},
+	</if>
+	<if test="amount != null  ">
+		amount=#{amount,jdbcType=INTEGER},
+	</if>
+	<if test="addTime != null  ">
+		addTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="zcSNSerial != null  ">
+		zcSNSerial=#{zcSNSerial,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	<if test="localId != null  ">
+		localId=#{localId,jdbcType=INTEGER},
+	</if>
+	<if test="useDeptId != null  ">
+		useDeptId=#{useDeptId,jdbcType=INTEGER},
+	</if>
+	<if test="useUid != null  ">
+		useUid=#{useUid,jdbcType=INTEGER},
+	</if>
+	<if test="baoxiuDate != null  ">
+		baoxiuDate=#{baoxiuDate,jdbcType=TIMESTAMP},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcInDetail where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcInDetail
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产入库明细表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcInDetail where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产入库明细表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcInDetail 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产入库明细表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcInDetail 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

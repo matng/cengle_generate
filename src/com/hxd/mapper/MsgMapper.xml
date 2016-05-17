@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.MsgMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.Msg" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="title" jdbcType="VARCHAR" property="title"/>
+	<result column="content" jdbcType="VARCHAR" property="content"/>
+	<result column="receiveUid" jdbcType="INTEGER" property="receiveUid"/>
+	<result column="receivePhone" jdbcType="VARCHAR" property="receivePhone"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+	<result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="msgType" jdbcType="INTEGER" property="msgType"/>
+</resultMap>
+       
+<!-- msg table all fields -->
+<sql id="Base_Column_List" >
+	 id,title,content,receiveUid,receivePhone,status,addTime,msgType
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="title != null and title != ''" >
+	    and title =  #{title}
+	</if>
+	<if test="content != null and content != ''" >
+	    and content =  #{content}
+	</if>
+	<if test="receiveUid != null and receiveUid != ''" >
+	    and receiveUid =  #{receiveUid}
+	</if>
+	<if test="receivePhone != null and receivePhone != ''" >
+	    and receivePhone =  #{receivePhone}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+	<if test="addTime != null and addTime != ''" >
+	    and addTime =  #{addTime}
+	</if>
+	<if test="msgType != null and msgType != ''" >
+	    and msgType =  #{msgType}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.Msg" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into msg(id,title,content,receiveUid,receivePhone,status,addTime,msgType)
+ values(#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{receiveUid,jdbcType=INTEGER},#{receivePhone,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{addTime,jdbcType=TIMESTAMP},#{msgType,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.Msg" >
+  insert into msg
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="title != null ">
+			title,
+		</if>
+		<if test="content != null ">
+			content,
+		</if>
+		<if test="receiveUid != null ">
+			receiveUid,
+		</if>
+		<if test="receivePhone != null ">
+			receivePhone,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+		<if test="addTime != null ">
+			addTime,
+		</if>
+		<if test="msgType != null ">
+			msgType,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="title != null ">
+			#{title,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null ">
+			#{content,jdbcType=VARCHAR},
+		</if>
+		<if test="receiveUid != null ">
+			#{receiveUid,jdbcType=INTEGER},
+		</if>
+		<if test="receivePhone != null ">
+			#{receivePhone,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+		<if test="addTime != null ">
+			#{addTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="msgType != null ">
+			#{msgType,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.Msg" >
+  update msg set title=#{title,jdbcType=VARCHAR},content=#{content,jdbcType=VARCHAR},receiveUid=#{receiveUid,jdbcType=INTEGER},receivePhone=#{receivePhone,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER},addTime=#{addTime,jdbcType=TIMESTAMP},msgType=#{msgType,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.Msg" >
+	update msg set 
+	<trim  suffixOverrides="," >
+	<if test="title != null  ">
+		title=#{title,jdbcType=VARCHAR},
+	</if>
+	<if test="content != null  ">
+		content=#{content,jdbcType=VARCHAR},
+	</if>
+	<if test="receiveUid != null  ">
+		receiveUid=#{receiveUid,jdbcType=INTEGER},
+	</if>
+	<if test="receivePhone != null  ">
+		receivePhone=#{receivePhone,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	<if test="addTime != null  ">
+		addTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="msgType != null  ">
+		msgType=#{msgType,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from msg where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from msg
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 提醒消息表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from msg where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 提醒消息表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from msg 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询提醒消息表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from msg 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

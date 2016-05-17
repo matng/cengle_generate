@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcCheckPlanMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcCheckPlan" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="planNo" jdbcType="VARCHAR" property="planNo"/>
+	<result column="planName" jdbcType="VARCHAR" property="planName"/>
+	<result column="planDate" jdbcType="TIMESTAMP" property="planDate"/>
+	<result column="planByUid" jdbcType="INTEGER" property="planByUid"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="addByUid" jdbcType="INTEGER" property="addByUid"/>
+</resultMap>
+       
+<!-- zcCheckPlan table all fields -->
+<sql id="Base_Column_List" >
+	 id,planNo,planName,planDate,planByUid,tip,addTime,addByUid
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="planNo != null and planNo != ''" >
+	    and planNo =  #{planNo}
+	</if>
+	<if test="planName != null and planName != ''" >
+	    and planName =  #{planName}
+	</if>
+	<if test="planDate != null and planDate != ''" >
+	    and planDate =  #{planDate}
+	</if>
+	<if test="planByUid != null and planByUid != ''" >
+	    and planByUid =  #{planByUid}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="addTime != null and addTime != ''" >
+	    and addTime =  #{addTime}
+	</if>
+	<if test="addByUid != null and addByUid != ''" >
+	    and addByUid =  #{addByUid}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcCheckPlan" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcCheckPlan(id,planNo,planName,planDate,planByUid,tip,addTime,addByUid)
+ values(#{id,jdbcType=INTEGER},#{planNo,jdbcType=VARCHAR},#{planName,jdbcType=VARCHAR},#{planDate,jdbcType=TIMESTAMP},#{planByUid,jdbcType=INTEGER},#{tip,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{addByUid,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcCheckPlan" >
+  insert into zcCheckPlan
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="planNo != null ">
+			planNo,
+		</if>
+		<if test="planName != null ">
+			planName,
+		</if>
+		<if test="planDate != null ">
+			planDate,
+		</if>
+		<if test="planByUid != null ">
+			planByUid,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="addTime != null ">
+			addTime,
+		</if>
+		<if test="addByUid != null ">
+			addByUid,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="planNo != null ">
+			#{planNo,jdbcType=VARCHAR},
+		</if>
+		<if test="planName != null ">
+			#{planName,jdbcType=VARCHAR},
+		</if>
+		<if test="planDate != null ">
+			#{planDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="planByUid != null ">
+			#{planByUid,jdbcType=INTEGER},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="addTime != null ">
+			#{addTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="addByUid != null ">
+			#{addByUid,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcCheckPlan" >
+  update zcCheckPlan set planNo=#{planNo,jdbcType=VARCHAR},planName=#{planName,jdbcType=VARCHAR},planDate=#{planDate,jdbcType=TIMESTAMP},planByUid=#{planByUid,jdbcType=INTEGER},tip=#{tip,jdbcType=VARCHAR},addTime=#{addTime,jdbcType=TIMESTAMP},addByUid=#{addByUid,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcCheckPlan" >
+	update zcCheckPlan set 
+	<trim  suffixOverrides="," >
+	<if test="planNo != null  ">
+		planNo=#{planNo,jdbcType=VARCHAR},
+	</if>
+	<if test="planName != null  ">
+		planName=#{planName,jdbcType=VARCHAR},
+	</if>
+	<if test="planDate != null  ">
+		planDate=#{planDate,jdbcType=TIMESTAMP},
+	</if>
+	<if test="planByUid != null  ">
+		planByUid=#{planByUid,jdbcType=INTEGER},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="addTime != null  ">
+		addTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="addByUid != null  ">
+		addByUid=#{addByUid,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcCheckPlan where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcCheckPlan
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 盘点计划表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcCheckPlan where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 盘点计划表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcCheckPlan 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询盘点计划表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcCheckPlan 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

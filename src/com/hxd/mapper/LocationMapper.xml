@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.LocationMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.Location" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="deptId" jdbcType="INTEGER" property="deptId"/>
+	<result column="locSN" jdbcType="VARCHAR" property="locSN"/>
+	<result column="locName" jdbcType="VARCHAR" property="locName"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+</resultMap>
+       
+<!-- location table all fields -->
+<sql id="Base_Column_List" >
+	 id,deptId,locSN,locName,tip,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="deptId != null and deptId != ''" >
+	    and deptId =  #{deptId}
+	</if>
+	<if test="locSN != null and locSN != ''" >
+	    and locSN =  #{locSN}
+	</if>
+	<if test="locName != null and locName != ''" >
+	    and locName =  #{locName}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.Location" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into location(id,deptId,locSN,locName,tip,status)
+ values(#{id,jdbcType=INTEGER},#{deptId,jdbcType=INTEGER},#{locSN,jdbcType=VARCHAR},#{locName,jdbcType=VARCHAR},#{tip,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.Location" >
+  insert into location
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="deptId != null ">
+			deptId,
+		</if>
+		<if test="locSN != null ">
+			locSN,
+		</if>
+		<if test="locName != null ">
+			locName,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="deptId != null ">
+			#{deptId,jdbcType=INTEGER},
+		</if>
+		<if test="locSN != null ">
+			#{locSN,jdbcType=VARCHAR},
+		</if>
+		<if test="locName != null ">
+			#{locName,jdbcType=VARCHAR},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.Location" >
+  update location set deptId=#{deptId,jdbcType=INTEGER},locSN=#{locSN,jdbcType=VARCHAR},locName=#{locName,jdbcType=VARCHAR},tip=#{tip,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.Location" >
+	update location set 
+	<trim  suffixOverrides="," >
+	<if test="deptId != null  ">
+		deptId=#{deptId,jdbcType=INTEGER},
+	</if>
+	<if test="locSN != null  ">
+		locSN=#{locSN,jdbcType=VARCHAR},
+	</if>
+	<if test="locName != null  ">
+		locName=#{locName,jdbcType=VARCHAR},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from location where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from location
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 存放地点表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from location where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 存放地点表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from location 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询存放地点表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from location 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

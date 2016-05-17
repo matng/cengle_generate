@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcAllocationMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcAllocation" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="outDeptId" jdbcType="INTEGER" property="outDeptId"/>
+	<result column="inDeptId" jdbcType="INTEGER" property="inDeptId"/>
+	<result column="checkDeptID" jdbcType="INTEGER" property="checkDeptID"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="addByUid" jdbcType="INTEGER" property="addByUid"/>
+</resultMap>
+       
+<!-- zcAllocation table all fields -->
+<sql id="Base_Column_List" >
+	 id,outDeptId,inDeptId,checkDeptID,tip,addTime,addByUid
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="outDeptId != null and outDeptId != ''" >
+	    and outDeptId =  #{outDeptId}
+	</if>
+	<if test="inDeptId != null and inDeptId != ''" >
+	    and inDeptId =  #{inDeptId}
+	</if>
+	<if test="checkDeptID != null and checkDeptID != ''" >
+	    and checkDeptID =  #{checkDeptID}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="addTime != null and addTime != ''" >
+	    and addTime =  #{addTime}
+	</if>
+	<if test="addByUid != null and addByUid != ''" >
+	    and addByUid =  #{addByUid}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcAllocation" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcAllocation(id,outDeptId,inDeptId,checkDeptID,tip,addTime,addByUid)
+ values(#{id,jdbcType=INTEGER},#{outDeptId,jdbcType=INTEGER},#{inDeptId,jdbcType=INTEGER},#{checkDeptID,jdbcType=INTEGER},#{tip,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{addByUid,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcAllocation" >
+  insert into zcAllocation
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="outDeptId != null ">
+			outDeptId,
+		</if>
+		<if test="inDeptId != null ">
+			inDeptId,
+		</if>
+		<if test="checkDeptID != null ">
+			checkDeptID,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="addTime != null ">
+			addTime,
+		</if>
+		<if test="addByUid != null ">
+			addByUid,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="outDeptId != null ">
+			#{outDeptId,jdbcType=INTEGER},
+		</if>
+		<if test="inDeptId != null ">
+			#{inDeptId,jdbcType=INTEGER},
+		</if>
+		<if test="checkDeptID != null ">
+			#{checkDeptID,jdbcType=INTEGER},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="addTime != null ">
+			#{addTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="addByUid != null ">
+			#{addByUid,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcAllocation" >
+  update zcAllocation set outDeptId=#{outDeptId,jdbcType=INTEGER},inDeptId=#{inDeptId,jdbcType=INTEGER},checkDeptID=#{checkDeptID,jdbcType=INTEGER},tip=#{tip,jdbcType=VARCHAR},addTime=#{addTime,jdbcType=TIMESTAMP},addByUid=#{addByUid,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcAllocation" >
+	update zcAllocation set 
+	<trim  suffixOverrides="," >
+	<if test="outDeptId != null  ">
+		outDeptId=#{outDeptId,jdbcType=INTEGER},
+	</if>
+	<if test="inDeptId != null  ">
+		inDeptId=#{inDeptId,jdbcType=INTEGER},
+	</if>
+	<if test="checkDeptID != null  ">
+		checkDeptID=#{checkDeptID,jdbcType=INTEGER},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="addTime != null  ">
+		addTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="addByUid != null  ">
+		addByUid=#{addByUid,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcAllocation where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcAllocation
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产调拨表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcAllocation where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产调拨表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcAllocation 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产调拨表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcAllocation 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

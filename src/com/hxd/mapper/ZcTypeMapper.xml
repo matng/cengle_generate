@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcTypeMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcType" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="pid" jdbcType="INTEGER" property="pid"/>
+	<result column="typeSN" jdbcType="VARCHAR" property="typeSN"/>
+	<result column="typeName" jdbcType="VARCHAR" property="typeName"/>
+	<result column="zjMethod" jdbcType="VARCHAR" property="zjMethod"/>
+	<result column="CZL" jdbcType="DECIMAL" property="cZL"/>
+	<result column="limitYear" jdbcType="INTEGER" property="limitYear"/>
+	<result column="sortNum" jdbcType="INTEGER" property="sortNum"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+</resultMap>
+       
+<!-- zcType table all fields -->
+<sql id="Base_Column_List" >
+	 id,pid,typeSN,typeName,zjMethod,CZL,limitYear,sortNum,tip,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="pid != null and pid != ''" >
+	    and pid =  #{pid}
+	</if>
+	<if test="typeSN != null and typeSN != ''" >
+	    and typeSN =  #{typeSN}
+	</if>
+	<if test="typeName != null and typeName != ''" >
+	    and typeName =  #{typeName}
+	</if>
+	<if test="zjMethod != null and zjMethod != ''" >
+	    and zjMethod =  #{zjMethod}
+	</if>
+	<if test="cZL != null and cZL != ''" >
+	    and CZL =  #{cZL}
+	</if>
+	<if test="limitYear != null and limitYear != ''" >
+	    and limitYear =  #{limitYear}
+	</if>
+	<if test="sortNum != null and sortNum != ''" >
+	    and sortNum =  #{sortNum}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcType" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcType(id,pid,typeSN,typeName,zjMethod,CZL,limitYear,sortNum,tip,status)
+ values(#{id,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{typeSN,jdbcType=VARCHAR},#{typeName,jdbcType=VARCHAR},#{zjMethod,jdbcType=VARCHAR},#{cZL,jdbcType=DECIMAL},#{limitYear,jdbcType=INTEGER},#{sortNum,jdbcType=INTEGER},#{tip,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcType" >
+  insert into zcType
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="pid != null ">
+			pid,
+		</if>
+		<if test="typeSN != null ">
+			typeSN,
+		</if>
+		<if test="typeName != null ">
+			typeName,
+		</if>
+		<if test="zjMethod != null ">
+			zjMethod,
+		</if>
+		<if test="cZL != null ">
+			CZL,
+		</if>
+		<if test="limitYear != null ">
+			limitYear,
+		</if>
+		<if test="sortNum != null ">
+			sortNum,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="pid != null ">
+			#{pid,jdbcType=INTEGER},
+		</if>
+		<if test="typeSN != null ">
+			#{typeSN,jdbcType=VARCHAR},
+		</if>
+		<if test="typeName != null ">
+			#{typeName,jdbcType=VARCHAR},
+		</if>
+		<if test="zjMethod != null ">
+			#{zjMethod,jdbcType=VARCHAR},
+		</if>
+		<if test="cZL != null ">
+			#{cZL,jdbcType=DECIMAL},
+		</if>
+		<if test="limitYear != null ">
+			#{limitYear,jdbcType=INTEGER},
+		</if>
+		<if test="sortNum != null ">
+			#{sortNum,jdbcType=INTEGER},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcType" >
+  update zcType set pid=#{pid,jdbcType=INTEGER},typeSN=#{typeSN,jdbcType=VARCHAR},typeName=#{typeName,jdbcType=VARCHAR},zjMethod=#{zjMethod,jdbcType=VARCHAR},CZL=#{cZL,jdbcType=DECIMAL},limitYear=#{limitYear,jdbcType=INTEGER},sortNum=#{sortNum,jdbcType=INTEGER},tip=#{tip,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcType" >
+	update zcType set 
+	<trim  suffixOverrides="," >
+	<if test="pid != null  ">
+		pid=#{pid,jdbcType=INTEGER},
+	</if>
+	<if test="typeSN != null  ">
+		typeSN=#{typeSN,jdbcType=VARCHAR},
+	</if>
+	<if test="typeName != null  ">
+		typeName=#{typeName,jdbcType=VARCHAR},
+	</if>
+	<if test="zjMethod != null  ">
+		zjMethod=#{zjMethod,jdbcType=VARCHAR},
+	</if>
+	<if test="cZL != null  ">
+		CZL=#{cZL,jdbcType=DECIMAL},
+	</if>
+	<if test="limitYear != null  ">
+		limitYear=#{limitYear,jdbcType=INTEGER},
+	</if>
+	<if test="sortNum != null  ">
+		sortNum=#{sortNum,jdbcType=INTEGER},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcType where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcType
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产分类表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcType where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产分类表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcType 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产分类表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcType 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

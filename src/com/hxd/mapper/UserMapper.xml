@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.UserMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.User" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="loginName" jdbcType="VARCHAR" property="loginName"/>
+	<result column="psw" jdbcType="VARCHAR" property="psw"/>
+	<result column="realName" jdbcType="VARCHAR" property="realName"/>
+	<result column="gender" jdbcType="INTEGER" property="gender"/>
+	<result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+	<result column="email" jdbcType="VARCHAR" property="email"/>
+	<result column="deptId" jdbcType="INTEGER" property="deptId"/>
+	<result column="roleId" jdbcType="INTEGER" property="roleId"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+</resultMap>
+       
+<!-- user table all fields -->
+<sql id="Base_Column_List" >
+	 id,loginName,psw,realName,gender,mobile,email,deptId,roleId,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="loginName != null and loginName != ''" >
+	    and loginName =  #{loginName}
+	</if>
+	<if test="psw != null and psw != ''" >
+	    and psw =  #{psw}
+	</if>
+	<if test="realName != null and realName != ''" >
+	    and realName =  #{realName}
+	</if>
+	<if test="gender != null and gender != ''" >
+	    and gender =  #{gender}
+	</if>
+	<if test="mobile != null and mobile != ''" >
+	    and mobile =  #{mobile}
+	</if>
+	<if test="email != null and email != ''" >
+	    and email =  #{email}
+	</if>
+	<if test="deptId != null and deptId != ''" >
+	    and deptId =  #{deptId}
+	</if>
+	<if test="roleId != null and roleId != ''" >
+	    and roleId =  #{roleId}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.User" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into user(id,loginName,psw,realName,gender,mobile,email,deptId,roleId,status)
+ values(#{id,jdbcType=INTEGER},#{loginName,jdbcType=VARCHAR},#{psw,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR},#{gender,jdbcType=INTEGER},#{mobile,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{deptId,jdbcType=INTEGER},#{roleId,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.User" >
+  insert into user
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="loginName != null ">
+			loginName,
+		</if>
+		<if test="psw != null ">
+			psw,
+		</if>
+		<if test="realName != null ">
+			realName,
+		</if>
+		<if test="gender != null ">
+			gender,
+		</if>
+		<if test="mobile != null ">
+			mobile,
+		</if>
+		<if test="email != null ">
+			email,
+		</if>
+		<if test="deptId != null ">
+			deptId,
+		</if>
+		<if test="roleId != null ">
+			roleId,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="loginName != null ">
+			#{loginName,jdbcType=VARCHAR},
+		</if>
+		<if test="psw != null ">
+			#{psw,jdbcType=VARCHAR},
+		</if>
+		<if test="realName != null ">
+			#{realName,jdbcType=VARCHAR},
+		</if>
+		<if test="gender != null ">
+			#{gender,jdbcType=INTEGER},
+		</if>
+		<if test="mobile != null ">
+			#{mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="email != null ">
+			#{email,jdbcType=VARCHAR},
+		</if>
+		<if test="deptId != null ">
+			#{deptId,jdbcType=INTEGER},
+		</if>
+		<if test="roleId != null ">
+			#{roleId,jdbcType=INTEGER},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.User" >
+  update user set loginName=#{loginName,jdbcType=VARCHAR},psw=#{psw,jdbcType=VARCHAR},realName=#{realName,jdbcType=VARCHAR},gender=#{gender,jdbcType=INTEGER},mobile=#{mobile,jdbcType=VARCHAR},email=#{email,jdbcType=VARCHAR},deptId=#{deptId,jdbcType=INTEGER},roleId=#{roleId,jdbcType=INTEGER},status=#{status,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.User" >
+	update user set 
+	<trim  suffixOverrides="," >
+	<if test="loginName != null  ">
+		loginName=#{loginName,jdbcType=VARCHAR},
+	</if>
+	<if test="psw != null  ">
+		psw=#{psw,jdbcType=VARCHAR},
+	</if>
+	<if test="realName != null  ">
+		realName=#{realName,jdbcType=VARCHAR},
+	</if>
+	<if test="gender != null  ">
+		gender=#{gender,jdbcType=INTEGER},
+	</if>
+	<if test="mobile != null  ">
+		mobile=#{mobile,jdbcType=VARCHAR},
+	</if>
+	<if test="email != null  ">
+		email=#{email,jdbcType=VARCHAR},
+	</if>
+	<if test="deptId != null  ">
+		deptId=#{deptId,jdbcType=INTEGER},
+	</if>
+	<if test="roleId != null  ">
+		roleId=#{roleId,jdbcType=INTEGER},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from user where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from user
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 用户管理表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from user where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 用户管理表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from user 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询用户管理表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from user 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

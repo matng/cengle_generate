@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcReceiveMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcReceive" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="title" jdbcType="VARCHAR" property="title"/>
+	<result column="receiveDeptId" jdbcType="INTEGER" property="receiveDeptId"/>
+	<result column="Urgency" jdbcType="VARCHAR" property="urgency"/>
+	<result column="amount" jdbcType="INTEGER" property="amount"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="addtime" jdbcType="TIMESTAMP" property="addtime"/>
+	<result column="addByUid" jdbcType="INTEGER" property="addByUid"/>
+</resultMap>
+       
+<!-- zcReceive table all fields -->
+<sql id="Base_Column_List" >
+	 id,title,receiveDeptId,Urgency,amount,tip,addtime,addByUid
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="title != null and title != ''" >
+	    and title =  #{title}
+	</if>
+	<if test="receiveDeptId != null and receiveDeptId != ''" >
+	    and receiveDeptId =  #{receiveDeptId}
+	</if>
+	<if test="urgency != null and urgency != ''" >
+	    and Urgency =  #{urgency}
+	</if>
+	<if test="amount != null and amount != ''" >
+	    and amount =  #{amount}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="addtime != null and addtime != ''" >
+	    and addtime =  #{addtime}
+	</if>
+	<if test="addByUid != null and addByUid != ''" >
+	    and addByUid =  #{addByUid}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcReceive" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcReceive(id,title,receiveDeptId,Urgency,amount,tip,addtime,addByUid)
+ values(#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{receiveDeptId,jdbcType=INTEGER},#{urgency,jdbcType=VARCHAR},#{amount,jdbcType=INTEGER},#{tip,jdbcType=VARCHAR},#{addtime,jdbcType=TIMESTAMP},#{addByUid,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcReceive" >
+  insert into zcReceive
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="title != null ">
+			title,
+		</if>
+		<if test="receiveDeptId != null ">
+			receiveDeptId,
+		</if>
+		<if test="urgency != null ">
+			Urgency,
+		</if>
+		<if test="amount != null ">
+			amount,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="addtime != null ">
+			addtime,
+		</if>
+		<if test="addByUid != null ">
+			addByUid,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="title != null ">
+			#{title,jdbcType=VARCHAR},
+		</if>
+		<if test="receiveDeptId != null ">
+			#{receiveDeptId,jdbcType=INTEGER},
+		</if>
+		<if test="urgency != null ">
+			#{urgency,jdbcType=VARCHAR},
+		</if>
+		<if test="amount != null ">
+			#{amount,jdbcType=INTEGER},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="addtime != null ">
+			#{addtime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="addByUid != null ">
+			#{addByUid,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcReceive" >
+  update zcReceive set title=#{title,jdbcType=VARCHAR},receiveDeptId=#{receiveDeptId,jdbcType=INTEGER},Urgency=#{urgency,jdbcType=VARCHAR},amount=#{amount,jdbcType=INTEGER},tip=#{tip,jdbcType=VARCHAR},addtime=#{addtime,jdbcType=TIMESTAMP},addByUid=#{addByUid,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcReceive" >
+	update zcReceive set 
+	<trim  suffixOverrides="," >
+	<if test="title != null  ">
+		title=#{title,jdbcType=VARCHAR},
+	</if>
+	<if test="receiveDeptId != null  ">
+		receiveDeptId=#{receiveDeptId,jdbcType=INTEGER},
+	</if>
+	<if test="urgency != null  ">
+		Urgency=#{urgency,jdbcType=VARCHAR},
+	</if>
+	<if test="amount != null  ">
+		amount=#{amount,jdbcType=INTEGER},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="addtime != null  ">
+		addtime=#{addtime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="addByUid != null  ">
+		addByUid=#{addByUid,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcReceive where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcReceive
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产领用表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcReceive where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产领用表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcReceive 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产领用表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcReceive 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

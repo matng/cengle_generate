@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcRepairMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcRepair" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="repairDate" jdbcType="TIMESTAMP" property="repairDate"/>
+	<result column="repairDeptId" jdbcType="INTEGER" property="repairDeptId"/>
+	<result column="repairType" jdbcType="VARCHAR" property="repairType"/>
+	<result column="contactUser" jdbcType="VARCHAR" property="contactUser"/>
+	<result column="contactPhone" jdbcType="VARCHAR" property="contactPhone"/>
+	<result column="repairCost" jdbcType="DECIMAL" property="repairCost"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="addByUid" jdbcType="INTEGER" property="addByUid"/>
+</resultMap>
+       
+<!-- zcRepair table all fields -->
+<sql id="Base_Column_List" >
+	 id,repairDate,repairDeptId,repairType,contactUser,contactPhone,repairCost,tip,addTime,addByUid
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="repairDate != null and repairDate != ''" >
+	    and repairDate =  #{repairDate}
+	</if>
+	<if test="repairDeptId != null and repairDeptId != ''" >
+	    and repairDeptId =  #{repairDeptId}
+	</if>
+	<if test="repairType != null and repairType != ''" >
+	    and repairType =  #{repairType}
+	</if>
+	<if test="contactUser != null and contactUser != ''" >
+	    and contactUser =  #{contactUser}
+	</if>
+	<if test="contactPhone != null and contactPhone != ''" >
+	    and contactPhone =  #{contactPhone}
+	</if>
+	<if test="repairCost != null and repairCost != ''" >
+	    and repairCost =  #{repairCost}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="addTime != null and addTime != ''" >
+	    and addTime =  #{addTime}
+	</if>
+	<if test="addByUid != null and addByUid != ''" >
+	    and addByUid =  #{addByUid}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcRepair" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcRepair(id,repairDate,repairDeptId,repairType,contactUser,contactPhone,repairCost,tip,addTime,addByUid)
+ values(#{id,jdbcType=INTEGER},#{repairDate,jdbcType=TIMESTAMP},#{repairDeptId,jdbcType=INTEGER},#{repairType,jdbcType=VARCHAR},#{contactUser,jdbcType=VARCHAR},#{contactPhone,jdbcType=VARCHAR},#{repairCost,jdbcType=DECIMAL},#{tip,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{addByUid,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcRepair" >
+  insert into zcRepair
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="repairDate != null ">
+			repairDate,
+		</if>
+		<if test="repairDeptId != null ">
+			repairDeptId,
+		</if>
+		<if test="repairType != null ">
+			repairType,
+		</if>
+		<if test="contactUser != null ">
+			contactUser,
+		</if>
+		<if test="contactPhone != null ">
+			contactPhone,
+		</if>
+		<if test="repairCost != null ">
+			repairCost,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="addTime != null ">
+			addTime,
+		</if>
+		<if test="addByUid != null ">
+			addByUid,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="repairDate != null ">
+			#{repairDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="repairDeptId != null ">
+			#{repairDeptId,jdbcType=INTEGER},
+		</if>
+		<if test="repairType != null ">
+			#{repairType,jdbcType=VARCHAR},
+		</if>
+		<if test="contactUser != null ">
+			#{contactUser,jdbcType=VARCHAR},
+		</if>
+		<if test="contactPhone != null ">
+			#{contactPhone,jdbcType=VARCHAR},
+		</if>
+		<if test="repairCost != null ">
+			#{repairCost,jdbcType=DECIMAL},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="addTime != null ">
+			#{addTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="addByUid != null ">
+			#{addByUid,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcRepair" >
+  update zcRepair set repairDate=#{repairDate,jdbcType=TIMESTAMP},repairDeptId=#{repairDeptId,jdbcType=INTEGER},repairType=#{repairType,jdbcType=VARCHAR},contactUser=#{contactUser,jdbcType=VARCHAR},contactPhone=#{contactPhone,jdbcType=VARCHAR},repairCost=#{repairCost,jdbcType=DECIMAL},tip=#{tip,jdbcType=VARCHAR},addTime=#{addTime,jdbcType=TIMESTAMP},addByUid=#{addByUid,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcRepair" >
+	update zcRepair set 
+	<trim  suffixOverrides="," >
+	<if test="repairDate != null  ">
+		repairDate=#{repairDate,jdbcType=TIMESTAMP},
+	</if>
+	<if test="repairDeptId != null  ">
+		repairDeptId=#{repairDeptId,jdbcType=INTEGER},
+	</if>
+	<if test="repairType != null  ">
+		repairType=#{repairType,jdbcType=VARCHAR},
+	</if>
+	<if test="contactUser != null  ">
+		contactUser=#{contactUser,jdbcType=VARCHAR},
+	</if>
+	<if test="contactPhone != null  ">
+		contactPhone=#{contactPhone,jdbcType=VARCHAR},
+	</if>
+	<if test="repairCost != null  ">
+		repairCost=#{repairCost,jdbcType=DECIMAL},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="addTime != null  ">
+		addTime=#{addTime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="addByUid != null  ">
+		addByUid=#{addByUid,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcRepair where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcRepair
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产维修表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcRepair where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产维修表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcRepair 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产维修表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcRepair 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

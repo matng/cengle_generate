@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.PowerMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.Power" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="owner" jdbcType="VARCHAR" property="owner"/>
+	<result column="ownerId" jdbcType="INTEGER" property="ownerId"/>
+	<result column="resource" jdbcType="VARCHAR" property="resource"/>
+	<result column="resourceId" jdbcType="INTEGER" property="resourceId"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+</resultMap>
+       
+<!-- power table all fields -->
+<sql id="Base_Column_List" >
+	 id,owner,ownerId,resource,resourceId,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="owner != null and owner != ''" >
+	    and owner =  #{owner}
+	</if>
+	<if test="ownerId != null and ownerId != ''" >
+	    and ownerId =  #{ownerId}
+	</if>
+	<if test="resource != null and resource != ''" >
+	    and resource =  #{resource}
+	</if>
+	<if test="resourceId != null and resourceId != ''" >
+	    and resourceId =  #{resourceId}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.Power" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into power(id,owner,ownerId,resource,resourceId,status)
+ values(#{id,jdbcType=INTEGER},#{owner,jdbcType=VARCHAR},#{ownerId,jdbcType=INTEGER},#{resource,jdbcType=VARCHAR},#{resourceId,jdbcType=INTEGER},#{status,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.Power" >
+  insert into power
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="owner != null ">
+			owner,
+		</if>
+		<if test="ownerId != null ">
+			ownerId,
+		</if>
+		<if test="resource != null ">
+			resource,
+		</if>
+		<if test="resourceId != null ">
+			resourceId,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="owner != null ">
+			#{owner,jdbcType=VARCHAR},
+		</if>
+		<if test="ownerId != null ">
+			#{ownerId,jdbcType=INTEGER},
+		</if>
+		<if test="resource != null ">
+			#{resource,jdbcType=VARCHAR},
+		</if>
+		<if test="resourceId != null ">
+			#{resourceId,jdbcType=INTEGER},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.Power" >
+  update power set owner=#{owner,jdbcType=VARCHAR},ownerId=#{ownerId,jdbcType=INTEGER},resource=#{resource,jdbcType=VARCHAR},resourceId=#{resourceId,jdbcType=INTEGER},status=#{status,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.Power" >
+	update power set 
+	<trim  suffixOverrides="," >
+	<if test="owner != null  ">
+		owner=#{owner,jdbcType=VARCHAR},
+	</if>
+	<if test="ownerId != null  ">
+		ownerId=#{ownerId,jdbcType=INTEGER},
+	</if>
+	<if test="resource != null  ">
+		resource=#{resource,jdbcType=VARCHAR},
+	</if>
+	<if test="resourceId != null  ">
+		resourceId=#{resourceId,jdbcType=INTEGER},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from power where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from power
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 权限表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from power where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 权限表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from power 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询权限表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from power 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

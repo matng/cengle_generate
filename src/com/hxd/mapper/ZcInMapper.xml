@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcInMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcIn" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="rukuSN" jdbcType="VARCHAR" property="rukuSN"/>
+	<result column="locatId" jdbcType="INTEGER" property="locatId"/>
+	<result column="extendInfo" jdbcType="LONGVARCHAR" property="extendInfo"/>
+	<result column="addtime" jdbcType="TIMESTAMP" property="addtime"/>
+	<result column="addByUid" jdbcType="INTEGER" property="addByUid"/>
+</resultMap>
+       
+<!-- zcIn table all fields -->
+<sql id="Base_Column_List" >
+	 id,rukuSN,locatId,extendInfo,addtime,addByUid
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="rukuSN != null and rukuSN != ''" >
+	    and rukuSN =  #{rukuSN}
+	</if>
+	<if test="locatId != null and locatId != ''" >
+	    and locatId =  #{locatId}
+	</if>
+	<if test="extendInfo != null and extendInfo != ''" >
+	    and extendInfo =  #{extendInfo}
+	</if>
+	<if test="addtime != null and addtime != ''" >
+	    and addtime =  #{addtime}
+	</if>
+	<if test="addByUid != null and addByUid != ''" >
+	    and addByUid =  #{addByUid}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcIn" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcIn(id,rukuSN,locatId,extendInfo,addtime,addByUid)
+ values(#{id,jdbcType=INTEGER},#{rukuSN,jdbcType=VARCHAR},#{locatId,jdbcType=INTEGER},#{extendInfo,jdbcType=LONGVARCHAR},#{addtime,jdbcType=TIMESTAMP},#{addByUid,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcIn" >
+  insert into zcIn
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="rukuSN != null ">
+			rukuSN,
+		</if>
+		<if test="locatId != null ">
+			locatId,
+		</if>
+		<if test="extendInfo != null ">
+			extendInfo,
+		</if>
+		<if test="addtime != null ">
+			addtime,
+		</if>
+		<if test="addByUid != null ">
+			addByUid,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="rukuSN != null ">
+			#{rukuSN,jdbcType=VARCHAR},
+		</if>
+		<if test="locatId != null ">
+			#{locatId,jdbcType=INTEGER},
+		</if>
+		<if test="extendInfo != null ">
+			#{extendInfo,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="addtime != null ">
+			#{addtime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="addByUid != null ">
+			#{addByUid,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcIn" >
+  update zcIn set rukuSN=#{rukuSN,jdbcType=VARCHAR},locatId=#{locatId,jdbcType=INTEGER},extendInfo=#{extendInfo,jdbcType=LONGVARCHAR},addtime=#{addtime,jdbcType=TIMESTAMP},addByUid=#{addByUid,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcIn" >
+	update zcIn set 
+	<trim  suffixOverrides="," >
+	<if test="rukuSN != null  ">
+		rukuSN=#{rukuSN,jdbcType=VARCHAR},
+	</if>
+	<if test="locatId != null  ">
+		locatId=#{locatId,jdbcType=INTEGER},
+	</if>
+	<if test="extendInfo != null  ">
+		extendInfo=#{extendInfo,jdbcType=LONGVARCHAR},
+	</if>
+	<if test="addtime != null  ">
+		addtime=#{addtime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="addByUid != null  ">
+		addByUid=#{addByUid,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcIn where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcIn
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产入库表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcIn where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产入库表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcIn 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产入库表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcIn 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

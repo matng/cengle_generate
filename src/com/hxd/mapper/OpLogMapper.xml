@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.OpLogMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.OpLog" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="title" jdbcType="VARCHAR" property="title"/>
+	<result column="content" jdbcType="LONGVARCHAR" property="content"/>
+	<result column="elapsed" jdbcType="INTEGER" property="elapsed"/>
+	<result column="loginIp" jdbcType="VARCHAR" property="loginIp"/>
+	<result column="userId" jdbcType="INTEGER" property="userId"/>
+	<result column="loginName" jdbcType="VARCHAR" property="loginName"/>
+	<result column="opTime" jdbcType="TIMESTAMP" property="opTime"/>
+</resultMap>
+       
+<!-- opLog table all fields -->
+<sql id="Base_Column_List" >
+	 id,title,content,elapsed,loginIp,userId,loginName,opTime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="title != null and title != ''" >
+	    and title =  #{title}
+	</if>
+	<if test="content != null and content != ''" >
+	    and content =  #{content}
+	</if>
+	<if test="elapsed != null and elapsed != ''" >
+	    and elapsed =  #{elapsed}
+	</if>
+	<if test="loginIp != null and loginIp != ''" >
+	    and loginIp =  #{loginIp}
+	</if>
+	<if test="userId != null and userId != ''" >
+	    and userId =  #{userId}
+	</if>
+	<if test="loginName != null and loginName != ''" >
+	    and loginName =  #{loginName}
+	</if>
+	<if test="opTime != null and opTime != ''" >
+	    and opTime =  #{opTime}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.OpLog" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into opLog(id,title,content,elapsed,loginIp,userId,loginName,opTime)
+ values(#{id,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{content,jdbcType=LONGVARCHAR},#{elapsed,jdbcType=INTEGER},#{loginIp,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{loginName,jdbcType=VARCHAR},#{opTime,jdbcType=TIMESTAMP})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.OpLog" >
+  insert into opLog
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="title != null ">
+			title,
+		</if>
+		<if test="content != null ">
+			content,
+		</if>
+		<if test="elapsed != null ">
+			elapsed,
+		</if>
+		<if test="loginIp != null ">
+			loginIp,
+		</if>
+		<if test="userId != null ">
+			userId,
+		</if>
+		<if test="loginName != null ">
+			loginName,
+		</if>
+		<if test="opTime != null ">
+			opTime,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="title != null ">
+			#{title,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null ">
+			#{content,jdbcType=LONGVARCHAR},
+		</if>
+		<if test="elapsed != null ">
+			#{elapsed,jdbcType=INTEGER},
+		</if>
+		<if test="loginIp != null ">
+			#{loginIp,jdbcType=VARCHAR},
+		</if>
+		<if test="userId != null ">
+			#{userId,jdbcType=INTEGER},
+		</if>
+		<if test="loginName != null ">
+			#{loginName,jdbcType=VARCHAR},
+		</if>
+		<if test="opTime != null ">
+			#{opTime,jdbcType=TIMESTAMP},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.OpLog" >
+  update opLog set title=#{title,jdbcType=VARCHAR},content=#{content,jdbcType=LONGVARCHAR},elapsed=#{elapsed,jdbcType=INTEGER},loginIp=#{loginIp,jdbcType=VARCHAR},userId=#{userId,jdbcType=INTEGER},loginName=#{loginName,jdbcType=VARCHAR},opTime=#{opTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.OpLog" >
+	update opLog set 
+	<trim  suffixOverrides="," >
+	<if test="title != null  ">
+		title=#{title,jdbcType=VARCHAR},
+	</if>
+	<if test="content != null  ">
+		content=#{content,jdbcType=LONGVARCHAR},
+	</if>
+	<if test="elapsed != null  ">
+		elapsed=#{elapsed,jdbcType=INTEGER},
+	</if>
+	<if test="loginIp != null  ">
+		loginIp=#{loginIp,jdbcType=VARCHAR},
+	</if>
+	<if test="userId != null  ">
+		userId=#{userId,jdbcType=INTEGER},
+	</if>
+	<if test="loginName != null  ">
+		loginName=#{loginName,jdbcType=VARCHAR},
+	</if>
+	<if test="opTime != null  ">
+		opTime=#{opTime,jdbcType=TIMESTAMP},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from opLog where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from opLog
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 日志表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from opLog where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 日志表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from opLog 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询日志表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from opLog 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

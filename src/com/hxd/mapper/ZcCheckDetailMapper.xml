@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.ZcCheckDetailMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.ZcCheckDetail" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="planId" jdbcType="VARCHAR" property="planId"/>
+	<result column="zcId" jdbcType="INTEGER" property="zcId"/>
+	<result column="zcInId" jdbcType="INTEGER" property="zcInId"/>
+	<result column="zcInDetailId" jdbcType="INTEGER" property="zcInDetailId"/>
+</resultMap>
+       
+<!-- zcCheckDetail table all fields -->
+<sql id="Base_Column_List" >
+	 id,planId,zcId,zcInId,zcInDetailId
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="planId != null and planId != ''" >
+	    and planId =  #{planId}
+	</if>
+	<if test="zcId != null and zcId != ''" >
+	    and zcId =  #{zcId}
+	</if>
+	<if test="zcInId != null and zcInId != ''" >
+	    and zcInId =  #{zcInId}
+	</if>
+	<if test="zcInDetailId != null and zcInDetailId != ''" >
+	    and zcInDetailId =  #{zcInDetailId}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.ZcCheckDetail" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into zcCheckDetail(id,planId,zcId,zcInId,zcInDetailId)
+ values(#{id,jdbcType=INTEGER},#{planId,jdbcType=VARCHAR},#{zcId,jdbcType=INTEGER},#{zcInId,jdbcType=INTEGER},#{zcInDetailId,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.ZcCheckDetail" >
+  insert into zcCheckDetail
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="planId != null ">
+			planId,
+		</if>
+		<if test="zcId != null ">
+			zcId,
+		</if>
+		<if test="zcInId != null ">
+			zcInId,
+		</if>
+		<if test="zcInDetailId != null ">
+			zcInDetailId,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="planId != null ">
+			#{planId,jdbcType=VARCHAR},
+		</if>
+		<if test="zcId != null ">
+			#{zcId,jdbcType=INTEGER},
+		</if>
+		<if test="zcInId != null ">
+			#{zcInId,jdbcType=INTEGER},
+		</if>
+		<if test="zcInDetailId != null ">
+			#{zcInDetailId,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.ZcCheckDetail" >
+  update zcCheckDetail set planId=#{planId,jdbcType=VARCHAR},zcId=#{zcId,jdbcType=INTEGER},zcInId=#{zcInId,jdbcType=INTEGER},zcInDetailId=#{zcInDetailId,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.ZcCheckDetail" >
+	update zcCheckDetail set 
+	<trim  suffixOverrides="," >
+	<if test="planId != null  ">
+		planId=#{planId,jdbcType=VARCHAR},
+	</if>
+	<if test="zcId != null  ">
+		zcId=#{zcId,jdbcType=INTEGER},
+	</if>
+	<if test="zcInId != null  ">
+		zcInId=#{zcInId,jdbcType=INTEGER},
+	</if>
+	<if test="zcInDetailId != null  ">
+		zcInDetailId=#{zcInDetailId,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from zcCheckDetail where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from zcCheckDetail
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 资产盘点明细清单表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from zcCheckDetail where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 资产盘点明细清单表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from zcCheckDetail 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询资产盘点明细清单表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from zcCheckDetail 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   

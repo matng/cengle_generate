@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxd.dao.CompanyDeptMapper" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.hxd.bean.CompanyDept" >
+	<result column="id" jdbcType="INTEGER" property="id"/>
+	<result column="pid" jdbcType="INTEGER" property="pid"/>
+	<result column="deptName" jdbcType="VARCHAR" property="deptName"/>
+	<result column="deptLeader" jdbcType="VARCHAR" property="deptLeader"/>
+	<result column="phone" jdbcType="VARCHAR" property="phone"/>
+	<result column="sortNum" jdbcType="INTEGER" property="sortNum"/>
+	<result column="tip" jdbcType="VARCHAR" property="tip"/>
+	<result column="status" jdbcType="INTEGER" property="status"/>
+</resultMap>
+       
+<!-- companyDept table all fields -->
+<sql id="Base_Column_List" >
+	 id,pid,deptName,deptLeader,phone,sortNum,tip,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="pid != null and pid != ''" >
+	    and pid =  #{pid}
+	</if>
+	<if test="deptName != null and deptName != ''" >
+	    and deptName =  #{deptName}
+	</if>
+	<if test="deptLeader != null and deptLeader != ''" >
+	    and deptLeader =  #{deptLeader}
+	</if>
+	<if test="phone != null and phone != ''" >
+	    and phone =  #{phone}
+	</if>
+	<if test="sortNum != null and sortNum != ''" >
+	    and sortNum =  #{sortNum}
+	</if>
+	<if test="tip != null and tip != ''" >
+	    and tip =  #{tip}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.hxd.bean.CompanyDept" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into companyDept(id,pid,deptName,deptLeader,phone,sortNum,tip,status)
+ values(#{id,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{deptName,jdbcType=VARCHAR},#{deptLeader,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{sortNum,jdbcType=INTEGER},#{tip,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+</insert>
+
+<insert id="insertSelective" parameterType="com.hxd.bean.CompanyDept" >
+  insert into companyDept
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			id,
+		</if>
+		<if test="pid != null ">
+			pid,
+		</if>
+		<if test="deptName != null ">
+			deptName,
+		</if>
+		<if test="deptLeader != null ">
+			deptLeader,
+		</if>
+		<if test="phone != null ">
+			phone,
+		</if>
+		<if test="sortNum != null ">
+			sortNum,
+		</if>
+		<if test="tip != null ">
+			tip,
+		</if>
+		<if test="status != null ">
+			status,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null ">
+			#{id,jdbcType=INTEGER},
+		</if>
+		<if test="pid != null ">
+			#{pid,jdbcType=INTEGER},
+		</if>
+		<if test="deptName != null ">
+			#{deptName,jdbcType=VARCHAR},
+		</if>
+		<if test="deptLeader != null ">
+			#{deptLeader,jdbcType=VARCHAR},
+		</if>
+		<if test="phone != null ">
+			#{phone,jdbcType=VARCHAR},
+		</if>
+		<if test="sortNum != null ">
+			#{sortNum,jdbcType=INTEGER},
+		</if>
+		<if test="tip != null ">
+			#{tip,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null ">
+			#{status,jdbcType=INTEGER},
+		</if>
+	</trim>
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.hxd.bean.CompanyDept" >
+  update companyDept set pid=#{pid,jdbcType=INTEGER},deptName=#{deptName,jdbcType=VARCHAR},deptLeader=#{deptLeader,jdbcType=VARCHAR},phone=#{phone,jdbcType=VARCHAR},sortNum=#{sortNum,jdbcType=INTEGER},tip=#{tip,jdbcType=VARCHAR},status=#{status,jdbcType=INTEGER} where id=#{id,jdbcType=INTEGER}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.hxd.bean.CompanyDept" >
+	update companyDept set 
+	<trim  suffixOverrides="," >
+	<if test="pid != null  ">
+		pid=#{pid,jdbcType=INTEGER},
+	</if>
+	<if test="deptName != null  ">
+		deptName=#{deptName,jdbcType=VARCHAR},
+	</if>
+	<if test="deptLeader != null  ">
+		deptLeader=#{deptLeader,jdbcType=VARCHAR},
+	</if>
+	<if test="phone != null  ">
+		phone=#{phone,jdbcType=VARCHAR},
+	</if>
+	<if test="sortNum != null  ">
+		sortNum=#{sortNum,jdbcType=INTEGER},
+	</if>
+	<if test="tip != null  ">
+		tip=#{tip,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null  ">
+		status=#{status,jdbcType=INTEGER},
+	</if>
+	</trim> where id=#{id,jdbcType=INTEGER}
+</update>
+
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	delete 	 from companyDept where id = #{id,jdbcType=INTEGER}
+</delete>
+
+<delete id="deleteByBatch" parameterType="java.util.List">
+  		delete from companyDept
+  		<where>
+ 		 	<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+  				id=#item
+    		</foreach>
+  		</where>
+  </delete>
+ 
+<!-- 根据id查询 组织结构表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from companyDept where id = #{id,jdbcType=INTEGER}
+</select>
+
+<!-- 组织结构表 列表总数-->
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
+	select count(1) from companyDept 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询组织结构表列表 -->
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
+	select 
+	<include refid="Base_Column_List"/>
+	from companyDept 
+	<include refid="Example_Where_Clause"/>
+	<choose>
+		<when test="orderField !=null and orderField !=''">
+			 ORDER BY ${orderField} <if test="orderDirection != null and orderDirection != ''">${orderDirection}</if>
+		</when>
+		<otherwise>
+			 order by id DESC
+		</otherwise>
+	</choose>
+</select>
+  	
+</mapper>   
