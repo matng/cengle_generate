@@ -244,6 +244,10 @@ public class CreateBean {
 			newDataType.append("timestamp");
 		else if (dataType.contains("int"))
 			newDataType.append("integer");
+		else if (dataType.contains("text"))
+			newDataType.append("longvarchar");
+		else if (dataType.contains("json"))
+			newDataType.append("longvarchar");
 		else 
 			newDataType.append(dataType);
 		return newDataType.toString().toUpperCase();

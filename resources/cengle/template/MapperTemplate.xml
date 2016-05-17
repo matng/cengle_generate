@@ -58,7 +58,7 @@ where 1=1
 </update>
 
 <!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="Object">
+<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 	$!{SQL.delete}
 </delete>
 
@@ -72,18 +72,18 @@ where 1=1
   </delete>
  
 <!-- 根据id查询 ${codeName} -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="Object">
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Long">
 	$!{SQL.selectById}
 </select>
 
 <!-- ${codeName} 列表总数-->
-<select id="selectListCount" resultType="java.lang.Integer"  parameterType="Object">
+<select id="selectListCount" resultType="java.lang.Integer"  parameterType="map">
 	select count(1) from ${tableName} 
 	<include refid="Example_Where_Clause"/>
 </select>
   	
 <!-- 查询${codeName}列表 -->
-<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="Object">
+<select id="selectListByPage" resultMap="BaseResultMap"  parameterType="map">
 	select 
 	<include refid="Base_Column_List"/>
 	from ${tableName} 

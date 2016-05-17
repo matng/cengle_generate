@@ -25,7 +25,7 @@ import ${bussPackage}.dao.${className}Mapper;
  * 在方法名上添加@Rollback(false)表示这个测试用例不需要回滚。
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:spring-*.xml")
+@ContextConfiguration(locations="classpath:config/*.xml")
 @TransactionConfiguration(defaultRollback = false)
 @Transactional
 public class ${className}ServiceTest {

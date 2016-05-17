@@ -20,11 +20,16 @@ public class CodeUtil {
 	}
 	*/
 	public static void main(String[] args) {
-		String[] tabName = {"carInfo","rent"};
-		String[] comment = {"车辆信息表","租借信息表"};
-		for (int i = 0; i < tabName.length; i++) {
+		//String[] tabName = {"carInfo","rent"};
+		String[] tabName = {"approvedMsg","companyDept","dataDict","itemRelation","location","msg","opLog","power","role","user","zcAllocation","zcBorrow","zcCheckDetail","zcCheckPlan","zcIn","zcInDetail","zcInItem","zcReceive","zcRepair","zcType"};
+		String[] comment = {"审批消息表","组织结构表","数据字典表","类目关系表","存放地点表","提醒消息表","日志表","权限表","角色表","用户管理表","资产调拨表","资产借用表","资产盘点明细清单表","盘点计划表","资产入库表","资产入库明细表","入库资产类目表","资产领用表","资产维修表","资产分类表"};
+		
+		
+		//String[] comment = {"车辆信息表","租借信息表"};
+		for (int i = 1; i < tabName.length; i++) {
 			config(tabName[i],comment[i]);
 		}
+		
 		
 	}
 

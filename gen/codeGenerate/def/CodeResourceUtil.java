@@ -9,13 +9,13 @@ public class CodeResourceUtil
 
   public static String DIVER_NAME = "com.mysql.jdbc.Driver";
 
-  public static String URL = "jdbc:mysql://localhost:3306/sys?useUnicode=true&characterEncoding=UTF-8";
+  public static String URL = "jdbc:mysql://localhost:3309/zcsys_db?useUnicode=true&characterEncoding=UTF-8";
 
   public static String USERNAME = "root";
 
-  public static String PASSWORD = "mysql";
+  public static String PASSWORD = "123456";
 
-  public static String DATABASE_NAME = "sys";
+  public static String DATABASE_NAME = "zcsys_db";
 
   public static String DATABASE_TYPE = "mysql";
   public static String DATABASE_TYPE_MYSQL = "mysql";

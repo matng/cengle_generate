@@ -25,9 +25,9 @@ import ${bussPackage}.vo#if($!entityPackage).${entityPackage}#end.${className}Vo
  */ 
 @Controller
 @RequestMapping("/${lowerName}")
-public class ${className}Controller extends BaseController{
+public class ${className}Ctl extends BaseCtl{
 	
-	private final static Logger log= Logger.getLogger(${className}Controller.class);
+	private final static Logger log= Logger.getLogger(${className}Ctl.class);
 
 	@Autowired
 	private ${className}Service ${lowerName}Service; 
@@ -39,7 +39,7 @@ public class ${className}Controller extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/${lowerName}View")
+	@RequestMapping("/view")
 	public String home(Model model,HttpServletRequest req) {
 		return "/jsp/";
 	}
@@ -54,7 +54,7 @@ public class ${className}Controller extends BaseController{
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/${lowerName}List", produces = {"application/json;charset=UTF-8"})
+	@RequestMapping(value = "/list", produces = {"application/json;charset=UTF-8"})
 	public String get${className}List (HttpServletRequest req,${className}Vo vo) throws Exception{
 	    	String json = null;
 		try {
@@ -98,6 +98,62 @@ public class ${className}Controller extends BaseController{
 			return StrUtil.toJsonStrWithFixed(sta);
 		}
 		log.debug("---status---"+StrUtil.toJsonStrWithFixed(sta));
+		return StrUtil.toJsonStrWithFixed(sta);
+	}
+
+	@RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String delete(@RequestBody String json) {  
+		StatusVo sta = new StatusVo();
+		try {
+			log.debug("===json="+json);	
+			${className}Vo ${lowerName} = JSON.parseObject(json,${className}Vo.class);
+			log.debug("===json="+${lowerName}.getIdList());
+			int i = 0;
+			//批量删除，单个删除特例
+			if (${lowerName}.getIdList().size() > 0)
+			{
+				i = ${lowerName}Service.delete${className}ByBatch(${lowerName}.getIdList());
+			}
+				
+			if (i > 0) {
+				//返回结果json数据给界面		
+				sta.setSuccess(this.getMessage("op.success"));	
+			} else {
+				sta.setError(this.getMessage("op.fail"));
+			}		
+			
+		} catch (Exception e) {
+			log.error(e);
+			sta.setError(this.getMessage("op.fail")+"\r\n"+e.getMessage());
+			return StrUtil.toJsonStrWithFixed(sta);
+		}
+		log.debug("===status:"+StrUtil.toJsonStrWithFixed(sta));
+		return StrUtil.toJsonStrWithFixed(sta);
+	}
+
+	@RequestMapping(value = "/edit", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String edit(@RequestBody String json) {
+		StatusVo sta = new StatusVo();
+		try {
+			log.debug("===json="+json);	
+			${className} ${lowerName} = JSON.parseObject(json,${className}.class);
+			int i = ${lowerName}Service.update${className}ByPrimaryKeySelective(${lowerName});
+		
+			if (i > 0) {
+				//返回结果json数据给界面		
+				sta.setSuccess(this.getMessage("op.success"));	
+			} else {
+				sta.setError(this.getMessage("op.fail"));
+			}		
+			
+		} catch (Exception e) {
+			log.error(e);
+			sta.setError(this.getMessage("op.fail")+"\r\n"+e.getMessage());
+			return StrUtil.toJsonStrWithFixed(sta);
+		}
+		log.debug("===status:"+StrUtil.toJsonStrWithFixed(sta));
 		return StrUtil.toJsonStrWithFixed(sta);
 	}
 

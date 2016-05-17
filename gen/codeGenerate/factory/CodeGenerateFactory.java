@@ -48,7 +48,7 @@ public class CodeGenerateFactory
     String mapperPath = "dao/" + entityPath + className + "Mapper.java";
     String servicePath = "service/" + entityPath + className + "Service.java";
     String serviceImplPath = "service/impl/" + entityPath + className + "ServiceImpl.java";
-    String controllerPath = "controller/" + className + "Controller.java";
+    String controllerPath = "controller/" + className + "Ctl.java";
     String sqlMapperPath = "mapper/" + entityPath + className + "Mapper.xml";
     String testPath = "test/" + entityPath + className + "ServiceTest.java";
     webPath = webPath + entityPath;

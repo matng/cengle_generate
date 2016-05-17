@@ -22,7 +22,7 @@
 	<!-- ***************配置数据源************** -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">	
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/carrental?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="url" value="jdbc:mysql://localhost:3309/zcsys_db?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
 	</bean>
